@@ -1,49 +1,57 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { db } from './firebase-config'
-import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore'
+import { collection, getDocs, addDoc, deleteDoc, doc, query, where } from 'firebase/firestore'
 
 function App() {
-  const [newEmail, setNewEmail] = useState("")
-  const [newName, setNewName] = useState("")
-  const [users, setUsers] = useState([])
-  const usersCollectionRef = collection(db, "users")
+  // const [newEmail, setNewEmail] = useState("")
+  // const [newName, setNewName] = useState("")
+  // const [users, setUsers] = useState([])
+  // const usersCollectionRef = collection(db, "users")
+  const parksCollectionRef = collection(db, "parkAttractions")
+  const attractionCollectionRef = collection(db, "parkAttractions")
+  const [parks, setParks] = useState([])
+  const [attractions, setAttractions] = useState([])
 
-  const createUser = async () => {
-    let newUser = {email: newEmail, firstName: newName}
-    await addDoc(usersCollectionRef, newUser)
-    setUsers([...users, newUser])
-  }
+  // const createUser = async () => {
 
-  const deleteUser = async (id) => {
-    const userDoc = doc(db, "users", id)
-    await deleteDoc(userDoc)
-  }
+  //   let newUser = {email: newEmail, firstName: newName}
+  //   await addDoc(usersCollectionRef, newUser)
+  //   setUsers([...users, newUser])
+  // }
+
+  // const deleteUser = async (id) => {
+  //   const userDoc = doc(db, "users", id)
+  //   await deleteDoc(userDoc)
+  // }
 
   useEffect(() => {
 
-    const getUsers = async () => {
-      const data = await getDocs(usersCollectionRef)
-      setUsers(data.docs.map((doc) =>({...doc.data(), id: doc.id})));
+    const getParks = async () => {
+      const parkData = await getDocs(parksCollectionRef);
+      const attractionData = await getDocs(attractionCollectionRef)
+      setParks(parkData.docs.map((doc) =>({...doc.data()})));
+      setAttractions(attractionData.docs.map((doc) =>({...doc.data()})))
     }
 
-    getUsers()
+    getParks()
+    console.log(attractions)
   })
 
 
   return (
     <div className="App">
-      <input type="email" placeholder="Email..." onChange={(e) => {setNewEmail(e.target.value)}}/>
+      {/* <input type="email" placeholder="Email..." onChange={(e) => {setNewEmail(e.target.value)}}/>
       <input placeholder="First Name..." onChange={(e) => {setNewName(e.target.value)}}/>
-      <button onClick={createUser}>Create User</button>
+      <button type="submit" onSubmit={(event) => {event.preventDefault(); createUser()}} onClick={createUser}>Create User</button> */}
 
-      {users.map((user) => {
+      {parks.map((park) => {
         return (
-        <div key={user.id}>
-          <h1>Email: {user.email}</h1>
-          <h2>First Name: {user.firstName}</h2>
-          <button onClick={() => {deleteUser(user.id)}}>Delete {user.firstName}</button>
-        </div>
+          <div key={park.id}>
+            <h1 key={`email${park.slug}`}>Slug: {park.slug}</h1>
+            <h2 key={`name${park.name}`}>Name: {park.name}</h2>
+            <h2 key={`name${park.entityType}`}>Type: {park.entityType}</h2>
+          </div>
         );
       })}
     </div>
