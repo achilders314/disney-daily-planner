@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { db } from './firebase-config'
+import { db, rtdb } from './firebase-config'
 import { collection, getDocs, addDoc, deleteDoc, doc, query, where } from 'firebase/firestore'
+import { ref, onValue } from 'firebase/database'
 
 function App() {
   // const [newEmail, setNewEmail] = useState("")
@@ -9,7 +10,7 @@ function App() {
   // const [users, setUsers] = useState([])
   // const usersCollectionRef = collection(db, "users")
   const parksCollectionRef = collection(db, "parkAttractions")
-  const attractionCollectionRef = collection(db, "parkAttractions")
+  const attractionCollectionRef = ref(rtdb, "/parks/1c84a229-8862-4648-9c71-378ddd2c7693")
   const [parks, setParks] = useState([])
   const [attractions, setAttractions] = useState([])
 
@@ -29,9 +30,11 @@ function App() {
 
     const getParks = async () => {
       const parkData = await getDocs(parksCollectionRef);
-      const attractionData = await getDocs(attractionCollectionRef)
+      onValue(attractionCollectionRef, (snap) => {
+        console.log(snap.val())
+      })
       setParks(parkData.docs.map((doc) =>({...doc.data()})));
-      setAttractions(attractionData.docs.map((doc) =>({...doc.data()})))
+      // setAttractions(attractionData.docs.map((doc) =>({...doc.data()})))
     }
 
     getParks()
