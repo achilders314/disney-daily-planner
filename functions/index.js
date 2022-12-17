@@ -13,7 +13,7 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
 });
 
 exports.collectParkData = functions.pubsub
-    .schedule("0 8,9,10,11,12,13,14,15,16,17,18,19,20,21 * * *")
+    .schedule("0 8,9,10,11,12,13,14,15,16,17,18,19 * * *")
     .timeZone("America/New_York").onRun(async () => {
       const timestamp = new Date();
       const fetchUrl = "https://api.themeparks.wiki/v1/entity/waltdisneyworldresort/live";
@@ -30,7 +30,7 @@ exports.collectParkData = functions.pubsub
           "75ea578a-adc8-4116-a54d-dccb60765ef9",
           "1c84a229-8862-4648-9c71-378ddd2c7693",
           "288747d1-8b4f-4a64-867e-ea7c9b27bad8",
-          "288747d1-8b4f-4a64-867e-ea7c9b27bad8"];
+          "47f90d2c-e191-4239-a466-5892ef59a88b"];
           // eslint-disable-next-line max-len
         disneyWorldLiveData = disneyWorldLiveData.filter((attraction) => (disneyWorldParks.indexOf(attraction.parkId) !== -1));
         // console.log(disneyWorldLiveData);
@@ -41,7 +41,7 @@ exports.collectParkData = functions.pubsub
           attractionName = attractionName.replace(/[.$#[\]]/g, "");
 
           // eslint-disable-next-line max-len
-          const currentEntry = admin.database().ref(`/parks/${attraction.parkId}/attractions/${attraction.entityType}/${attractionName}`);
+          const currentEntry = admin.database().ref(`/attractions/${attraction.entityType}/${attractionName}`);
           // eslint-disable-next-line max-len
           currentEntry.get().then((snapshot) => {
             const currentEntryData = snapshot.exists() ? snapshot.val() : false;
@@ -87,7 +87,7 @@ exports.collectParkData = functions.pubsub
               const waitTimeAvg = currentEntryData.waitTimeAvg[hoursAssignment];
               console.log(waitTimeAvg);
               // eslint-disable-next-line max-len
-              if (waitTimeAvg.length >=14 || (waitTimeAvg.length == 1 && waitTimeAvg[0] == 0)) {
+              if (waitTimeAvg.length >=30 || (waitTimeAvg.length == 1 && waitTimeAvg[0] == 0)) {
                 waitTimeAvg.shift();
               }
               console.log(waitTimeAvg);
@@ -99,12 +99,12 @@ exports.collectParkData = functions.pubsub
                 currentWaitTime: currentWaitTime,
               };
               // eslint-disable-next-line max-len
-              admin.database().ref(`parks/${attraction.parkId}/attractions/${attraction.entityType}/${attractionName}/waitTimeAvg`)
+              admin.database().ref(`attractions/${attraction.entityType}/${attractionName}/waitTimeAvg`)
                   .update({[hoursAssignment]: waitTimeAvg});
             }
             console.log(attractionUpdate);
             // eslint-disable-next-line max-len
-            admin.database().ref(`parks/${attraction.parkId}/attractions/${attraction.entityType}/${attractionName}`)
+            admin.database().ref(`attractions/${attraction.entityType}/${attractionName}`)
                 .update(attractionUpdate);
           });
           // eslint-disable-next-line max-len
@@ -116,12 +116,3 @@ exports.collectParkData = functions.pubsub
     //   const finished = await Promise.all(promiseArr);
     //   return finished;
     });
-
-
-// usersRef.where("email", "==", "alisonchilders314@gmail.com")
-// .get()
-// .then((snap) => {
-//   snap.forEach((doc) => {
-//     console.log(doc.data());
-//   });
-// });
