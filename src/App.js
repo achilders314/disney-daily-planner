@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import { app } from './firebase-config'
 // import { collection, getDocs, addDoc, deleteDoc, doc, query, where } from 'firebase/firestore'
+import { Routes, Route } from 'react-router-dom';
 import { ref, get, getDatabase, child } from 'firebase/database'
+import Nav from './components/Nav'
+import Attractions from './components/Attractions'
+import Footer from './components/Footer'
 
 function App() {
   // const [newEmail, setNewEmail] = useState("")
@@ -45,7 +49,7 @@ function App() {
           console.log(snap.val());
           setAttractions(attractionKeys.map((ride) => {return {name: ride, data: attractionData.ATTRACTION[ride]}}));
           setRestaurants(restaurantKeys.map((restaurant) => {return {name: restaurant, data: attractionData.RESTAURANT[restaurant]}}));
-          setAttractions(showKeys.map((show) => {return {name: show, data: attractionData.SHOW[show]}}));
+          setShows(showKeys.map((show) => {return {name: show, data: attractionData.SHOW[show]}}));
         }
         else{
           console.log("No data")
@@ -62,28 +66,16 @@ function App() {
 
   return (
     <div className="App">
-      {parks.map((park) => {
-        return(
-          <div key={park.parkId} className="park">
-            <h1 key={`name${park.data.name}`}>Name: {park.data.name}</h1>
-            <h4 key={`email${park.data.slug}`}>Slug: {park.data.slug}</h4>
-            <h4 key={`name${park.data.entityType}`}>Type: {park.data.entityType}</h4>
-            <div className="attractions">
-              <h2>Attractions</h2>
-              {attractions.filter(attraction => attraction.data.parkId === park.parkId).map((attraction => {
-                return(
-                <div className="attractionCards">
-                  <h3>{attraction.name}</h3>
-                  <p>Status: {attraction.data.status}</p>
-                  <p>Current Wait Time: {attraction.data.currentWaitTime}</p>
-                  <p>Last Update: {attraction.data.lastUpdated}</p>
-                </div>
-                )
-              }))}
-            </div>
-          </div>
-        )
-      })}
+      <Nav />
+      <Routes>
+        <Route path="/" element={<h1>Home Page</h1>}></Route>
+        <Route path="/my-plans" 
+          element={<Attractions parks={parks} attractions={attractions}/>}></Route>
+        <Route path="/faq" element={<h1>FAQ</h1>}></Route>
+        <Route path="/contact" element={<h1>Contact Us</h1>}></Route>
+        <Route path="/profile" element={<h1>Profile</h1>}></Route>
+      </Routes>
+      <Footer />
     </div>
   );
 }

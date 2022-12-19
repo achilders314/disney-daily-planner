@@ -1,3 +1,81 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+
+
+main {
+  padding: 2%;
+  background: linear-gradient(45deg, #925D54, #896F7D, #77759A, #7E939A, #e0b78a);
+  background-attachment: fixed;
+}
+
+main h1, main h2{
+  text-shadow: 2px 2px 2px #333;
+}
+
+/* main div {
+  background-color: #fff;
+} */
+
+.nav-link {
+  color: #000;
+}
+
+footer {
+  background-color: #F8F9FA;
+  color: #000;
+  text-align: center;
+  height: 80px;
+}
+
+i {
+  color: purple;
+}
+
+i:hover {
+  color: #000;
+}
+
 .park{
-  border: 1px solid black;
+  color: #fff;
+  padding: 1% 2%;
+}
+
+.attractions{
+  padding: 10px 0;
+  color: #000;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  background-color: #f2f4f7;
+  border-radius: 20px;
+}
+
+.attractionCards{
+  width: 22%;
+  padding: 10px;
+  margin: 10px 5px 10px 5px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 4px 4px 4px #777;
+}
+
+.attraction-header{
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.attractionCards h5 {
+  width: 90%;
+}
+
+.time-note{
+  font-style: italic;
+  color: #999;
+  font-size: 0.7rem;
+  line-height: 0;
 }
