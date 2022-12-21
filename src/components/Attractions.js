@@ -24,7 +24,7 @@ export default function Attractions(props){
                             </div>
                         </div>
                     <p>Status: {attraction.data.status}</p>
-                    <p>Current Wait Time: {attraction.data.currentWaitTime} minutes</p>
+                    <p class="wait-time">Current Wait Time: {attraction.data.currentWaitTime} minutes</p>
                     <p className="time-note">Last Update: {attraction.data.lastUpdated}</p>
                     </div>
                     )

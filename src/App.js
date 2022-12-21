@@ -69,6 +69,7 @@ function App() {
       <Nav />
       <Routes>
         <Route path="/" element={<h1>Home Page</h1>}></Route>
+        <Route path="/*" element={<h1>Home Page</h1>}></Route>
         <Route path="/my-plans" 
           element={<Attractions parks={parks} attractions={attractions}/>}></Route>
         <Route path="/faq" element={<h1>FAQ</h1>}></Route>
