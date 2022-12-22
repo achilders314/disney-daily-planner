@@ -76,9 +76,12 @@ i:hover {
   padding: 10px;
   min-height: 350px;
   margin: 10px 5px 10px 5px;
-  background-color: #fff;
   border-radius: 20px;
   box-shadow: 4px 4px 4px #777;
+}
+
+.active{
+  background-color: rgb(69, 72, 218);
 }
 
 .attraction-header{
