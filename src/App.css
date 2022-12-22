@@ -18,9 +18,25 @@ main h1, main h2{
 /* main div {
   background-color: #fff;
 } */
+.nav-item {
+  color: #777;
+}
 
-.nav-link {
+.nav-item:visited{
+  color: #777;
+}
+
+.nav-item:hover {
   color: #000;
+}
+
+.nav-item:active{
+  color: #000;
+}
+
+
+.dropdown{
+  display: flex;
 }
 
 footer {
@@ -32,6 +48,7 @@ footer {
 
 i {
   color: purple;
+  font-size: 1.3rem;;
 }
 
 i:hover {
@@ -57,6 +74,7 @@ i:hover {
 .attractionCards{
   width: 22%;
   padding: 10px;
+  min-height: 350px;
   margin: 10px 5px 10px 5px;
   background-color: #fff;
   border-radius: 20px;
@@ -81,4 +99,54 @@ i:hover {
   font-style: italic;
   color: #999;
   font-size: 0.7rem;
+}
+
+.time{
+  width: 60%;
+}
+
+.hourly-chart{
+  min-height: 50px;
+}
+
+.bar {
+  width: 7.5%;
+}
+
+.bar-label {
+  margin: 0;
+  font-size: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+.bar-height {
+  background-color: #999;
+  border-radius: 3px;
+}
+
+.bar-minutes {
+  font-size: 10px;
+  width: 100%;
+  margin: 0;
+  text-align: center;
+}
+
+@media screen and (max-width: 1240px) {
+  .attractionCards {
+    width: 30%;
+  }
+}
+
+@media screen and (max-width: 910px) {
+  .attractionCards {
+    width: 40%;
+  }
+}
+
+@media screen and (max-width: 710px) {
+  .attractionCards {
+    width: 85%;
+  }
+
 }

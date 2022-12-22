@@ -15,7 +15,7 @@ function Nav(){
                         <Link className="nav-link" to="/">Disney Daily Planner</Link>
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link" to="/my-plans">My Plans</Link>
+                        <Link className="nav-link" to="/my-plans">Attractions</Link>
                     </li>
                     <li className="nav-item">
                         <Link className="nav-link" to="/faq">FAQ</Link>
@@ -23,17 +23,17 @@ function Nav(){
                     <li className="nav-item">
                         <Link className="nav-link" to="/contact">Contact Us</Link>
                     </li>
-                    <li className="nav-item dropdown">
-                    <Link className="nav-link dropdown-toggle" to="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                </ul>
+                </div>
+                <li className="nav-item dropdown">
+                    <Link className="nav-link nav-item dropdown-toggle" to="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa-solid fa-user"></i>  Alison's Profile
                     </Link>
                     <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <li><Link className="dropdown-item" to="#">Profile Settings</Link></li>
                         <li><Link className="dropdown-item" to="#">Sign Out</Link></li>
                     </ul>
-                    </li>
-                </ul>
-                </div>
+                </li>
             </div>
         </nav>
     )
