@@ -2,6 +2,7 @@
 An app created with React/Firebase that allows users to plan their trip at Walt Disney World using wait time data from the [Themepark API](https://api.themeparks.wiki/docs/v1/)
 
 [Live Site (Visit "Attractions" page to see where it's headed)](https://disney-daily-planner-dbad2.web.app/)
+![Image of Disney Daily Planner](https://user-images.githubusercontent.com/102301042/209495887-9bcc1414-42c5-4697-9976-bf65be6f0a8d.png)
 
 ### Description
 In this React/Firebase project, I have a Google cloud function set up to gather data each hour from the Themeparks API. This displays in the app and my plan is to allow users to click the checkboxes and add the attractions to their visit. They will then be able to schedule out times that they'd like to visit the attractions each day of their trip, and print an itinerary if desired.
