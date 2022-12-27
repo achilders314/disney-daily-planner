@@ -1,10 +1,39 @@
-# Getting Started with Create React App
+# Disney Daily Planner Web App (in Progress)
+An app created with React/Firebase that allows users to plan their trip at Walt Disney World using wait time data from the [Themepark API](https://api.themeparks.wiki/docs/v1/)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[Live Site (Visit "Attractions" page to see where it's headed)](https://disney-daily-planner-dbad2.web.app/)
+![Image of Disney Daily Planner](https://user-images.githubusercontent.com/102301042/209495887-9bcc1414-42c5-4697-9976-bf65be6f0a8d.png)
+
+### Description
+In this React/Firebase project, I have a Google cloud function set up to gather data each hour from the Themeparks API. This displays in the app and my plan is to allow users to click the checkboxes and add the attractions to their visit. They will then be able to schedule out times that they'd like to visit the attractions each day of their trip, and print an itinerary if desired.
+
+### Technologies Used
+- Google Firebase Realtime Database
+- Google Firebase Firestore Database
+- React
+- Bootstrap
+- Vanilla CSS
+- Google Cloud Functions
+- Themeparks API
+
+### Features
+- List of attractions in alphabetical order, sorted by park
+- Each attraction has current wait time as well as average wait times from the last 14 days for each hour.
+- Checkboxes to select which attractions to add to your trip (coming soon)
+- Ability to schedule times you want to block off for attracitons (coming soon)
+- Ability to add a custom item (like breaks/meals, Disney Springs excursions, etc) (coming soon)
+- Ability to print your schedule (coming soon)
+
+
+### Lessons Learned
+- Setting up my own Firebase back end.
+- Setting up hosting through Firebase
+- Working more fluently with React Hooks.
+
 
 ## Available Scripts
 
-In the project directory, you can run:
+This app was created using create-react-app. In the project directory, you can run:
 
 ### `npm start`
 
@@ -13,11 +42,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
@@ -39,32 +63,3 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
