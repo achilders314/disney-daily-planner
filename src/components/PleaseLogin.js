@@ -9,7 +9,7 @@ export default function PleaseLogin() {
             <Card className="w-100">
                 <Card.Body>
                     <h2 className="w-100 text-center mb-4">You are currently logged out</h2>
-                    <p>To access this page, please <Link to="/sign-up">sign up</Link> or <Link to="/please-login">log in.</Link></p>
+                    <p>To access this page, please <Link to="/sign-up">sign up</Link> or <Link to="/login">log in.</Link></p>
                 </Card.Body>
             </Card>
         </Container>
