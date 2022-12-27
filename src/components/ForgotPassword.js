@@ -1,49 +1,36 @@
 import React, { useRef, useState } from 'react'
 import { Card, Form, Button, Container, Alert } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-
-export default function Login(){
+export default function ForgotPassword(){
     const emailRef = useRef();
-    const passwordRef = useRef();
-    const { login, googleLogin } = useAuth();
+    const { resetPassword } = useAuth();
     const [error, setError] = useState('');
+    const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
 
     async function handleSubmit(e){
         e.preventDefault();
         let regexForEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
         try{
-            if(emailRef.current.value === '' || passwordRef.current.value === ''){
-                return setError("Please enter a valid email and password.")
+            if(emailRef.current.value === ''){
+                return setError("Please enter a valid email.")
             }
             if(emailRef.current.value.match(regexForEmail) == null){
                 return setError("Invalid email, please try again")
             }
             setLoading(true)
+            setMessage('')
             setError('')
-            await login(emailRef.current.value, passwordRef.current.value)
-            navigate("/")
+            await resetPassword(emailRef.current.value)
+            setMessage("Check your inbox for further instructions.")
         } catch {
-            setError('Failed to sign in. Please check your username and password and try again.')
+            setError('Failed to reset password. Please check your username and try again.')
         }
 
         setLoading(false)
-    }
-
-    async function handleGoogleLogin(e){
-        e.preventDefault();
-
-        try{
-            setError('')
-            await googleLogin()
-
-        } catch {
-            setError('Failed to sign in. Please try again.')
-        }
     }
 
     return(
@@ -51,22 +38,21 @@ export default function Login(){
                     style={{ minHeight: "80vh", maxWidth: "400px"}}>
             <Card className="w-100">
                 <Card.Body>
-                    <h2 className="w-100 text-center mb-4">Log In</h2>
+                    <h2 className="w-100 text-center mb-4">Reset Password</h2>
                     {error && <Alert variant='danger'>{error}</Alert>}
+                    {message && <Alert variant='success'>{message}</Alert>}
                     <Form>
                         <Form.Group className="my-2" id="email">
                             <Form.Label>Email</Form.Label>
                             <Form.Control type="email" ref={emailRef} required />
                         </Form.Group>
-                        <Form.Group className="my-2" id="password">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" ref={passwordRef} required />
-                        </Form.Group>
-                        <Button className="w-100" type="submit" disabled={loading} onClick={handleSubmit}>Log In</Button>
+                        
+                        <Button className="w-100" type="submit" disabled={loading} onClick={handleSubmit}>
+                            Reset Password
+                        </Button>
                     </Form>
-                    <button className="w-100 my-2 login-with-google-btn" onClick={handleGoogleLogin}>Sign in with Google</button>
                     <div className="w-100 text-center mt-3">
-                        <Link to="/forgot-password">Forgot password?</Link>
+                        <Link to="/login">Log In</Link>
                     </div>
                 </Card.Body>
             </Card>

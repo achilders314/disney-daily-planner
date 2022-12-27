@@ -1,6 +1,15 @@
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import React, { useContext, useEffect, useState } from 'react'
-import { auth } from '../firebase-config'
+import { 
+    createUserWithEmailAndPassword, 
+    onAuthStateChanged, 
+    signInWithEmailAndPassword, 
+    signOut, 
+    sendPasswordResetEmail, 
+    signInWithPopup,
+    // GoogleAuthProvider
+} from 'firebase/auth';
+import React, { useContext, useEffect, useState } from 'react';
+import { auth, googleProvider } from '../firebase-config';
+import { useNavigate } from 'react-router-dom';
 
 const AuthContext = React.createContext();
 
@@ -10,7 +19,8 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState();
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     function signup(email, password){
        return createUserWithEmailAndPassword(auth, email, password);
@@ -21,9 +31,27 @@ export function AuthProvider({ children }) {
         return signInWithEmailAndPassword(auth, email, password);
      }
 
+    function googleLogin(){
+        signInWithPopup(auth, googleProvider)
+            .then((result) => {
+                // const credential = GoogleAuthProvider.credentialFromResult(result);
+                // const token = credential.accessToken;
+                const user = result.user;
+                navigate("/")
+
+            }).catch((err) => {
+                return err.message;
+            })
+    }
+
     function logout(){
         signOut(auth);
     }
+
+    function resetPassword(email){
+        return sendPasswordResetEmail(auth, email);
+    }
+
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -38,7 +66,9 @@ export function AuthProvider({ children }) {
         currentUser,
         login,
         logout,
-        signup
+        signup, 
+        resetPassword, 
+        googleLogin
     }
     return(
         <AuthContext.Provider value={value}>

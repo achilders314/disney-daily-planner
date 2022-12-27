@@ -14,8 +14,14 @@ export default function Signup(){
 
     async function handleSubmit(e){
         e.preventDefault();
+        let regexForEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
-
+        if(emailRef.current.value === '' || passwordRef.current.value === ''){
+            return setError("Please enter a valid email and password.")
+        }
+        if(emailRef.current.value.match(regexForEmail) == null){
+            return setError("Invalid email, please try again")
+        }
         if(passwordRef.current.value !== passwordConfirmRef.current.value){ return setError('Passwords to not match') }
         try{
             setLoading(true)

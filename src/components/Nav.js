@@ -50,7 +50,7 @@ function Nav(){
                         {currentUser ? currentUser.email : "Sign Up or Log In"}
                     </Link>
                     <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        {currentUser && <li><Link className="dropdown-item" to="#">Profile Settings</Link></li>}
+                        {currentUser && <li><Link className="dropdown-item" to="/profile">Profile</Link></li>}
                         {currentUser && <li><Button className="dropdown-item" onClick={handleLogout}>Sign Out</Button></li>}
                         {!currentUser && <li><Link className="dropdown-item" to="/sign-up">Sign Up</Link></li>}
                         {!currentUser && <li><Link className="dropdown-item" to="/login">Log In</Link></li>}
