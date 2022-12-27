@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import './App.css';
 import { app } from './firebase-config'
 // import { collection, getDocs, addDoc, deleteDoc, doc, query, where } from 'firebase/firestore'
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Switch } from 'react-router-dom';
+import PrivateRoute from './components/PrivateRoute';
 import { ref, get, getDatabase, child } from 'firebase/database'
 import Nav from './components/Nav'
+import Signup from './components/Signup';
+import Login from './components/Login';
+import PleaseLogin from './components/PleaseLogin'
 import Attractions from './components/Attractions'
 import Footer from './components/Footer'
+import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
   // const [newEmail, setNewEmail] = useState("")
@@ -66,17 +71,24 @@ function App() {
 
   return (
     <div className="App">
+      <AuthProvider>
       <Nav />
       <Routes>
-        <Route path="/" element={<h1>Home Page</h1>}></Route>
-        <Route path="/*" element={<h1>Home Page</h1>}></Route>
-        <Route path="/my-plans" 
-          element={<Attractions parks={parks} attractions={attractions}/>}></Route>
-        <Route path="/faq" element={<h1>FAQ</h1>}></Route>
-        <Route path="/contact" element={<h1>Contact Us</h1>}></Route>
-        <Route path="/profile" element={<h1>Profile</h1>}></Route>
+          <Route path="/" element={<h1>Home Page</h1>}></Route>
+          <Route path="/*" element={<h1>Home Page</h1>}></Route>
+          <Route path="/contact" element={<h1>Contact Us</h1>}></Route>
+          <Route path="/sign-up" element={<Signup />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/please-login" element={<PleaseLogin />}></Route>
+          <Route exact element={<PrivateRoute />}>
+            <Route exact path="/attractions" element={<Attractions parks={parks} attractions={attractions}/>}></Route>
+            <Route exact path="/my-trip" element={<h1>My Trip</h1>}></Route>
+            <Route exact path="/profile" element={<h1>Profile</h1>}></Route>
+          </Route>
+          
       </Routes>
       <Footer />
+      </AuthProvider>
     </div>
   );
 }

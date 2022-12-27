@@ -87,7 +87,7 @@ exports.collectParkData = functions.pubsub
               const waitTimeAvg = currentEntryData.waitTimeAvg[hoursAssignment];
               console.log(waitTimeAvg);
               // eslint-disable-next-line max-len
-              if (waitTimeAvg.length >=30 || (waitTimeAvg.length == 1 && waitTimeAvg[0] == 0)) {
+              if (waitTimeAvg.length >=14 || (waitTimeAvg.length == 1 && waitTimeAvg[0] == 0)) {
                 waitTimeAvg.shift();
               }
               console.log(waitTimeAvg);

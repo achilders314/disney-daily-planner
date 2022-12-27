@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 function SingleAttraction(props){
     const [checked, setChecked] = useState(false);
@@ -30,16 +30,12 @@ function SingleAttraction(props){
         setChecked(e.target.checked);
     }
 
-    useEffect(() => {
-    
-    }, [checked])
-
     return(
         <div key={attraction.name} className="attractionCards" style={{backgroundColor: checked ? "#c1d0e8" : "#fff"}}>
                         <div className="attraction-header">
                             <h5>{attraction.name}</h5>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" 
+                            <div className="form-check form-check-inline">
+                                <input className="form-check-input" 
                                     type="checkbox" id="inlineCheckbox1" 
                                     value="option1"
                                     onChange={activeStateChange} />

@@ -20,7 +20,7 @@ export default function Attractions(props){
                 {attractions.filter(attraction => attraction.data.parkId === park.parkId).map((attraction => {
                                         
                     return(
-                        <SingleAttraction attraction={attraction}/>
+                        <SingleAttraction key={attraction.name} attraction={attraction}/>
                     )
                 }))}
                 </div>
