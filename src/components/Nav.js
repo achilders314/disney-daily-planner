@@ -45,10 +45,10 @@ function Nav(){
                         </ul>
                     </div>
                 <li className="nav-item dropdown">
-                    <Link className="nav-link nav-item dropdown-toggle" to="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button className="nav-link nav-item dropdown-toggle border-0 bg-light" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i className="fa-solid fa-user"></i>
                         {currentUser ? currentUser.email : "Sign Up or Log In"}
-                    </Link>
+                    </button>
                     <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         {currentUser && <li><Link className="dropdown-item" to="/profile">Profile</Link></li>}
                         {currentUser && <li><Button className="dropdown-item" onClick={handleLogout}>Sign Out</Button></li>}
