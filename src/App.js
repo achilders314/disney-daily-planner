@@ -10,6 +10,7 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import PleaseLogin from './components/PleaseLogin'
 import ForgotPassword from './components/ForgotPassword'
+import MyTrip from './components/MyTrip'
 import Attractions from './components/Attractions'
 import Footer from './components/Footer'
 import { AuthProvider } from './contexts/AuthContext';
@@ -84,7 +85,7 @@ function App() {
           <Route exact path="/attractions" element={<Attractions parks={parks} attractions={attractions}/>}></Route>
           <Route exact path="/forgot-password" element={<ForgotPassword />}></Route>
           <Route exact element={<PrivateRoute />}>
-            <Route exact path="/my-trip" element={<h1>My Trip</h1>}></Route>
+            <Route exact path="/my-trip" element={<MyTrip />}></Route>
             <Route exact path="/profile" element={<h1>Profile</h1>}></Route>
           </Route>
           
