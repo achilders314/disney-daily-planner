@@ -7,7 +7,7 @@ export default function Signup(){
     const emailRef = useRef();
     const passwordRef = useRef();
     const passwordConfirmRef = useRef();
-    const { signup } = useAuth();
+    const { signup, googleLogin } = useAuth();
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -35,6 +35,18 @@ export default function Signup(){
         setLoading(false)
     }
 
+    async function handleGoogleLogin(e){
+        e.preventDefault();
+
+        try{
+            setError('')
+            await googleLogin()
+
+        } catch {
+            setError('Failed to sign in. Please try again.')
+        }
+    }
+
     return(
         <Container className="d-flex flex-column justify-content-center align-items-center my-4"
                     style={{ minHeight: "80vh", maxWidth: "400px"}}>
@@ -57,6 +69,7 @@ export default function Signup(){
                         </Form.Group>
                         <Button className="w-100" type="submit" disabled={loading} onClick={handleSubmit}>Sign Up</Button>
                     </Form>
+                    <button className="w-100 my-2 login-with-google-btn" onClick={handleGoogleLogin}>Sign in with Google</button>
                 </Card.Body>
             </Card>
             <div className="w-100 text-center mt-2">

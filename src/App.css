@@ -9,6 +9,7 @@ main {
   padding: 2%;
   background: linear-gradient(45deg, #925D54, #896F7D, #77759A, #7E939A, #e0b78a);
   background-attachment: fixed;
+  min-height: 80vh;
 }
 
 main h1, main h2{
@@ -18,7 +19,7 @@ main h1, main h2{
 /* main div {
   background-color: #fff;
 } */
-.nav-item {
+/* .nav-item {
   color: #777;
 }
 
@@ -32,7 +33,7 @@ main h1, main h2{
 
 .nav-item:active{
   color: #000;
-}
+} */
 
 
 .dropdown{
@@ -47,7 +48,7 @@ footer {
 }
 
 i {
-  color: purple;
+  color: #6e506e;
   font-size: 1.3rem;;
 }
 
@@ -195,3 +196,13 @@ i:hover {
     box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
     cursor: not-allowed;
   }
+
+#not-found-message {
+    background: linear-gradient(45deg, #925D54, #896F7D, #77759A, #7E939A, #e0b78a);
+    background-attachment: fixed;
+    text-align: center;
+}
+
+#not-found-message div {
+  border-radius: 15px;
+}

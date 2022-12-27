@@ -6,6 +6,7 @@ import { Routes, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 import { ref, get, getDatabase, child } from 'firebase/database'
 import Nav from './components/Nav'
+import Home from './components/Home'
 import Signup from './components/Signup';
 import Login from './components/Login';
 import PleaseLogin from './components/PleaseLogin'
@@ -13,6 +14,7 @@ import ForgotPassword from './components/ForgotPassword'
 import MyTrip from './components/MyTrip'
 import Attractions from './components/Attractions'
 import Footer from './components/Footer'
+import NotFound from './components/NotFound'
 import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
@@ -76,19 +78,18 @@ function App() {
       <AuthProvider>
       <Nav />
       <Routes>
-          <Route path="/" element={<h1>Home Page</h1>}></Route>
-          <Route path="/*" element={<h1>Home Page</h1>}></Route>
-          <Route path="/contact" element={<h1>Contact Us</h1>}></Route>
-          <Route path="/sign-up" element={<Signup />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/please-login" element={<PleaseLogin />}></Route>
+          <Route exact path="/" element={<Home />}></Route>
+          <Route exact path="/contact" element={<main><h1 className="text-white">Contact Us</h1></main>}></Route>
+          <Route exact path="/sign-up" element={<Signup />}></Route>
+          <Route exact path="/login" element={<Login />}></Route>
+          <Route exact path="/please-login" element={<PleaseLogin />}></Route>
           <Route exact path="/attractions" element={<Attractions parks={parks} attractions={attractions}/>}></Route>
           <Route exact path="/forgot-password" element={<ForgotPassword />}></Route>
           <Route exact element={<PrivateRoute />}>
             <Route exact path="/my-trip" element={<MyTrip />}></Route>
             <Route exact path="/profile" element={<h1>Profile</h1>}></Route>
           </Route>
-          
+          <Route path="/*" element={<NotFound />}></Route>
       </Routes>
       <Footer />
       </AuthProvider>

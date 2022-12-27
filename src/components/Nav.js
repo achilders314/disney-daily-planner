@@ -22,8 +22,8 @@ function Nav(){
 
     return(
         <>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top px-4">
-                <Link className="nav-link logo" to="/"><i className="fa-solid fa-suitcase-rolling"></i></Link>
+        <nav className="navbar navbar-expand-lg bg-light navbar-light sticky-top px-4">
+                <Link className="nav-link logo" to="/"><i class="fa-brands fa-fort-awesome-alt"></i></Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
