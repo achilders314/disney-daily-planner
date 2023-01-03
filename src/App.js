@@ -12,6 +12,7 @@ import Login from './components/Login';
 import PleaseLogin from './components/PleaseLogin'
 import ForgotPassword from './components/ForgotPassword'
 import MyTrip from './components/MyTrip'
+import Profile from './components/Profile'
 import Attractions from './components/Attractions'
 import Footer from './components/Footer'
 import NotFound from './components/NotFound'
@@ -87,7 +88,7 @@ function App() {
           <Route exact path="/forgot-password" element={<ForgotPassword />}></Route>
           <Route exact element={<PrivateRoute />}>
             <Route exact path="/my-trip" element={<MyTrip />}></Route>
-            <Route exact path="/profile" element={<h1>Profile</h1>}></Route>
+            <Route exact path="/profile" element={<Profile />}></Route>
           </Route>
           <Route path="/*" element={<NotFound />}></Route>
       </Routes>

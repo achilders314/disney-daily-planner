@@ -8,14 +8,16 @@ import {
     // GoogleAuthProvider
 } from 'firebase/auth';
 import React, { useContext, useEffect, useState } from 'react';
-import { auth, googleProvider } from '../firebase-config';
+import { auth, googleProvider, db } from '../firebase-config';
+import { doc, getDoc, setDoc, collection } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
 const AuthContext = React.createContext();
 
 export function useAuth() {
-    return useContext(AuthContext)
+    return useContext(AuthContext);
 }
+
 
 export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState();
@@ -52,6 +54,44 @@ export function AuthProvider({ children }) {
         return sendPasswordResetEmail(auth, email);
     }
 
+    async function lookupUserDetails(currentUser){
+        const userID = currentUser.uid;
+        const usersRef = collection(db, "users");
+        const singleUserRef = doc(db, "users", userID);
+        let userSnap = await getDoc(singleUserRef);
+        if(userSnap.exists()){
+            return userSnap.data();
+        }
+        else{
+            await setDoc(doc(usersRef, userID), {
+                email: currentUser.email,
+                firstName: "",
+                trip: [],
+        })
+            userSnap = await getDoc(singleUserRef);
+            return userSnap.data(); 
+        }
+    }
+
+    // async function updateUserDetails(currentUser){
+    //     const userID = currentUser.uid;
+    //     const usersRef = collection(db, "users");
+    //     const singleUserRef = doc(db, "users", userID);
+    //     let userSnap = await getDoc(singleUserRef);
+    //     if(userSnap.exists()){
+    //         return userSnap.data();
+    //     }
+    //     else{
+    //         await setDoc(doc(usersRef, userID), {
+    //             email: currentUser.email,
+    //             firstName: "",
+    //             trip: [],
+    //     })
+    //         userSnap = await getDoc(singleUserRef);
+    //         return userSnap.data(); 
+    //     }
+    // }
+
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -68,7 +108,8 @@ export function AuthProvider({ children }) {
         logout,
         signup, 
         resetPassword, 
-        googleLogin
+        googleLogin,
+        lookupUserDetails,
     }
     return(
         <AuthContext.Provider value={value}>
