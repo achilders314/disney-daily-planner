@@ -42,9 +42,15 @@ function App() {
       await get(parksCollectionRef).then((snap) => {
         if(snap.exists()){
           parkData = snap.val();
-          parkIds = Object.keys(parkData)
-          console.log(snap.val());
-          setParks(parkIds.map((park) => {return {parkId: park, data: parkData[park]}}));
+          parkIds = Object.keys(parkData);
+          setParks(parkIds.map((park) => {return {parkId: park, data: parkData[park]}})
+                          .sort((a, b) => {
+                            let nameA = a.data.name.toLowerCase();
+            let nameB = b.data.name.toLowerCase();
+            if(nameA > nameB){ return -1 }
+            if(nameA < nameB){ return 1 }
+            return 0;
+            }));
         }
         else{
           console.log("No data")
@@ -56,7 +62,6 @@ function App() {
           attractionKeys = Object.keys(attractionData.ATTRACTION)
           restaurantKeys = Object.keys(attractionData.RESTAURANT)
           showKeys = Object.keys(attractionData.SHOW)
-          console.log(snap.val());
           setAttractions(attractionKeys.map((ride) => {return {name: ride, data: attractionData.ATTRACTION[ride]}}));
           setRestaurants(restaurantKeys.map((restaurant) => {return {name: restaurant, data: attractionData.RESTAURANT[restaurant]}}));
           setShows(showKeys.map((show) => {return {name: show, data: attractionData.SHOW[show]}}));

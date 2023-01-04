@@ -23,10 +23,10 @@ export default function Login(){
             if(emailRef.current.value.match(regexForEmail) == null){
                 return setError("Invalid email, please try again")
             }
-            setLoading(true)
-            setError('')
-            await login(emailRef.current.value, passwordRef.current.value)
-            navigate("/")
+            setLoading(true);
+            setError('');
+            await login(emailRef.current.value, passwordRef.current.value);
+            navigate("/");
         } catch {
             setError('Failed to sign in. Please check your username and password and try again.')
         }
@@ -39,7 +39,8 @@ export default function Login(){
 
         try{
             setError('')
-            await googleLogin()
+            await googleLogin();
+            navigate("/")
 
         } catch {
             setError('Failed to sign in. Please try again.')

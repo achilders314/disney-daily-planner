@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
+import { useAuth } from '../contexts/AuthContext';
 
 function SingleAttraction(props){
     const [checked, setChecked] = useState(false);
     const attraction = props.attraction;
+    const {currentUser} = useAuth();
     let timestamp = new Date(attraction.data.lastUpdated);
     let day = timestamp.getDay();
     let today = new Date();
@@ -35,10 +37,12 @@ function SingleAttraction(props){
                         <div className="attraction-header">
                             <h5>{attraction.name}</h5>
                             <div className="form-check form-check-inline">
+                                {currentUser ?
                                 <input className="form-check-input" 
                                     type="checkbox" id="inlineCheckbox1" 
                                     value="option1"
-                                    onChange={activeStateChange} />
+                                    onChange={activeStateChange} /> :
+                                    ""}
                             </div>
                         </div>
                     <p>Status: {attraction.data.status}</p>

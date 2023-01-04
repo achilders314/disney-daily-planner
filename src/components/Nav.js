@@ -1,13 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Alert, Button } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 
 function Nav(){
     const [error, setError] = useState("");
-    const {currentUser} = useAuth();
+    const { userData, logout, currentUser } = useAuth();
     const navigation = useNavigate();
-    const { logout } = useAuth();
 
     async function handleLogout(){
         setError('');
@@ -19,6 +18,10 @@ function Nav(){
             setError("Failed to log out")
         }
     }
+
+    useEffect(() => {
+             
+    }, [userData])
 
     return(
         <>
@@ -45,9 +48,11 @@ function Nav(){
                         </ul>
                     </div>
                 <li className="nav-item dropdown">
-                    <button className="nav-link nav-item dropdown-toggle border-0 bg-light" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button className="nav-link nav-item dropdown-toggle border-0 bg-light" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                         <i className="fa-solid fa-user"></i>
-                        {currentUser ? currentUser.email : "Sign Up or Log In"}
+                        {currentUser ? 
+                        userData.firstName !== "" ? userData.firstName : currentUser.email : 
+                        "Sign Up or Log In"}
                     </button>
                     <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         {currentUser && <li><Link className="dropdown-item" to="/profile">Profile</Link></li>}

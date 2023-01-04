@@ -3,22 +3,12 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext'
 
 export default function MyTrip() {
-  const [userDetails, setUserDetails] = useState('');
-  const { lookupUserDetails, currentUser } = useAuth();
+  const { userData } = useAuth();
   
   useEffect(() => {
-    async function getUserDetails(){
-      try{
-        await lookupUserDetails(currentUser).then(data => {
-          setUserDetails(data);
-        })        
-      } catch(e){
-        console.log(e);
-      }
-    }
-    getUserDetails();
     
-  }, [])
+    
+  }, [userData])
 
   return (
     <main className="d-flex justify-content-center align-items-center flex-column"
@@ -31,15 +21,15 @@ export default function MyTrip() {
           </p>
           <h3>User Details:</h3>
           <p>
-            Email: {userDetails.email}
+            Email: {userData.email}
           </p>  
           <p>
-            Name: {userDetails.firstName}
+            Name: {userData.firstName}
           </p>      
           <div>
-            Trip Dates: {(userDetails.trip == undefined || userDetails.trip.length == 0) ? 
+            Trip Dates: {(userData.trip === undefined || userData.trip.length === 0) ? 
             <span className='text-muted fst-italic'>No trips yet, please visit <Link to="/profile">your profile</Link> to add one.</span> : 
-            <span>{userDetails.trip[0].tripStart} - {userDetails.trip[0].tripEnd}</span>}          
+            <span>{userData.trip[0].tripStart} - {userData.trip[0].tripEnd}</span>}          
           </div>
           <p className="text-center fs-6 text-muted mt-4">Please visit your profile page to edit your details.</p>
         </div>

@@ -21,6 +21,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState();
+    const [userData, setUserData] = useState("");
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
@@ -29,8 +30,8 @@ export function AuthProvider({ children }) {
     }
 
 
-    function login(email, password){
-        signInWithEmailAndPassword(auth, email, password)
+    async function login(email, password){
+        await signInWithEmailAndPassword(auth, email, password)
             .then(async (result) => {
                 // const credential = GoogleAuthProvider.credentialFromResult(result);
                 // const token = credential.accessToken;
@@ -48,12 +49,12 @@ export function AuthProvider({ children }) {
                         trip: [],
                         lastLogin: new Date(),
                 })}
-                navigate("/")
             }).catch((err) => {return err.message});
+            navigate("/");
      }
 
-    function googleLogin(){
-        signInWithPopup(auth, googleProvider)
+    async function googleLogin(){
+        await signInWithPopup(auth, googleProvider)
             .then(async (result) => {
                 // const credential = GoogleAuthProvider.credentialFromResult(result);
                 // const token = credential.accessToken;
@@ -71,10 +72,10 @@ export function AuthProvider({ children }) {
                         trip: [],
                         lastLogin: new Date(),
                 })}
-                navigate("/")
             }).catch((err) => {
                 return err.message;
             })
+            navigate("/")
     }
 
     function logout(){
@@ -85,14 +86,15 @@ export function AuthProvider({ children }) {
         return sendPasswordResetEmail(auth, email);
     }
 
-    async function lookupUserDetails(){
-        const userID = currentUser.uid;
+    async function lookupUserDetails(currentUser){
+        const userID = await currentUser.uid;
         const usersRef = collection(db, "users");
         const singleUserRef = doc(db, "users", userID);
         let userSnap = await getDoc(singleUserRef);
         if(userSnap.exists()){
             await updateDoc(singleUserRef, {lastActivity: new Date()});
-            return userSnap.data();
+            setUserData(userSnap.data());
+            return userSnap.data()
         }
         else{
             await setDoc(doc(usersRef, userID), {
@@ -103,15 +105,17 @@ export function AuthProvider({ children }) {
                 lastActivity: new Date(),
         })
             userSnap = await getDoc(singleUserRef);
-            return userSnap.data(); 
+            setUserData(userSnap.data());
+            return userSnap.data();
         }
     }
 
     async function updateUserDetails(userUpdate){
-        const userID = currentUser.uid;
+        const userID = await currentUser.uid;
         const singleUserRef = doc(db, "users", userID);
         await updateDoc(singleUserRef, userUpdate);
         let userSnap = await getDoc(singleUserRef);
+        setUserData(userSnap.data());
         return userSnap.data(); 
     }
 
@@ -120,14 +124,21 @@ export function AuthProvider({ children }) {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             setCurrentUser(user);
+            async function setupUser(currentUser){
+                await lookupUserDetails(currentUser);
+            }
+            if(currentUser !== null & currentUser !== undefined && currentUser.uid){
+                setupUser(user);
+            }
             setLoading(false);
         })
 
         return unsubscribe;
-    }, [])
+    }, [currentUser])
 
     const value = {
         currentUser,
+        userData,
         login,
         logout,
         signup, 

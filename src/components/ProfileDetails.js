@@ -1,7 +1,13 @@
-import React from 'react'
+import React, {useEffect} from 'react'
+import { useAuth } from '../contexts/AuthContext';
 
-export default function ProfileDetails(props) {
-    const userDetails = props.userDetails;
+export default function ProfileDetails() {
+    const { loading, userData } = useAuth();
+
+    useEffect(() => {
+        
+    }, [userData])
+
   return (
     <div>
         <p className="mt-3">(Coming Soon) You'll be able to pick which 
@@ -9,15 +15,29 @@ export default function ProfileDetails(props) {
                 Walt Disney World trip! Keep visiting this page regularly as updates come out.
         </p>
         <p>
-            Email: {userDetails.email}
+            Email: {userData.email}
         </p>  
         <p>
-            Name: {userDetails.firstName}
+            Name: {userData.firstName}
         </p>
         <div>
-            Trip Dates: {(userDetails.trip == undefined || userDetails.trip.length == 0) ? 
+            Trip Dates: {(userData.trip === undefined || userData.trip.length === 0) ? 
             <span className='text-muted fst-italic'>No trips yet, please click the button above to add one.</span> : 
-            <span>{userDetails.trip[0].tripStart} - {userDetails.trip[0].tripEnd}</span>}          
+            <span>{userData.trip[0].tripStart} - {userData.trip[0].tripEnd}</span>}          
+        </div>
+        <div>
+            Parks: {
+                (userData.trip === undefined || userData.trip.length === 0) ?
+                <span className='text-muted fst-italic'>No trips yet, please click the button above to add one.</span> : 
+                <ul>
+                    {userData.trip[0].parkDays.map((day, index) => {
+                      return( 
+                        <li key={`${day.tripDate}-details`}> Day {index+1}: {day.tripDate} - {day.park} - ({day.attractions.length} attractions)
+                        </li>  
+                      )
+                    })}
+                </ul>
+            }
         </div>
         <p className="text-center fs-6 text-muted mt-4">Please select "Update Profile" to edit your details.</p>
     </div>

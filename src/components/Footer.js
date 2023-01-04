@@ -8,7 +8,7 @@ function Footer(){
                 <a className="mx-2" rel="noopener noreferrer" href="https://mail.google.com/mail/?view=cm&source=mailto&to=alisonchilders314@gmail.com" target="_blank" aria-label="Contact me by Email"><i className="fa-solid fa-envelope" alt="Email me"></i></a>
                 <a className="mx-2" rel="noopener noreferrer" href="https://alisonchilders.com" target="_blank" aria-label="Visit my Website"><i className="fa-solid fa-globe"></i></a>
             </div>
-            <p className="">{new Date().getFullYear()} by Alison Childers</p>
+            <p>{new Date().getFullYear()} by Alison Childers</p>
         </footer>
     )
 }
