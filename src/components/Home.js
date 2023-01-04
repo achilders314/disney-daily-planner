@@ -5,15 +5,17 @@ export default function Home() {
   return (
     <main className="d-flex justify-content-center align-items-center flex-column"
           style={{ minHeight: "80vh"}}>
-            <h1 className='text-white mb-4'>Home Page</h1>
+            <h1 className='text-white mb-4'>Welcome!</h1>
         <div className="bg-white rounded p-4 w-75">
-            <p>This page is still under construction. Visit the <Link to="/attractions">Attractions</Link> page 
-              to see what's been done so far or click the dropdown menu in the 
-              upper-right corner to sign up and create an account!
-            </p>
+            <p>This page is still under construction. Currently users are able to:</p>
+            <ul>
+                <li>View the Home, Contact, and <Link to="/attractions">Attractions</Link> pages.</li>
+                <li>Sign up or log in using either email or Google authentication through Firebase.</li>
+                <li>View their <Link to="my-trip">My Trip</Link> page.</li>
+                <li>View their <Link to="profile">Profile</Link> page and edit their name, trip dates & parks.</li>
+            </ul>
             <p>The plan for the near future is to allow users to:</p>
             <ul>
-                <li>Add their trip dates to their "My Trip" page</li>
                 <li>Add attractions, restaurants, and shows to each day of your trip</li>
                 <li>Create a customized schedule of those attractions</li>
                 <li>Save for trip day or create a printable PDF itinerary</li>
