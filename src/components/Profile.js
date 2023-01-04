@@ -5,6 +5,7 @@ import ProfileDetails from './ProfileDetails';
 import ProfileUpdate from './ProfileUpdate';
 
 export default function Profile() {
+    const [loading, setLoading] = useState(true);
     const [userDetails, setUserDetails] = useState('');
     const [updateMode, setUpdateMode] = useState(false);
     const { lookupUserDetails, currentUser } = useAuth();
@@ -14,13 +15,13 @@ export default function Profile() {
         try{
             await lookupUserDetails(currentUser).then(data => {
             setUserDetails(data);
+            setLoading(false);
             })        
         } catch(e){
             console.log(e);
         }
         }
-        getUserDetails();
-        
+        getUserDetails();        
     }, [])
     return (
         <main className="d-flex justify-content-center align-items-center flex-column"
@@ -28,13 +29,14 @@ export default function Profile() {
         <h2 className="text-white mb-4">My Profile</h2>
         <div className="bg-white rounded p-4 w-75">
             <div className="d-flex flex-column align-items-end">
-                <Button type="button" variant="primary" onClick={() => {setUpdateMode(!updateMode)}}>
-                    {updateMode ? "Discard Changes" : "Update Profile"}
-                </Button>
-                <p className="mt-3">(Coming Soon) You'll be able to pick which 
-                attractions you'd like to visit and create a customized schedule for your 
-                Walt Disney World trip! Keep visiting this page regularly as updates come out.
-                </p>
+                {updateMode ? 
+                <Button type="button" variant="danger" onClick={() => {setUpdateMode(!updateMode)}}>Discard Changes</Button> :
+                <Button type="button" 
+                        variant="primary"
+                        disabled={loading} 
+                        onClick={() => {setUpdateMode(!updateMode)}}>Update Profile</Button>
+                }
+                
             </div>
             <h3>User Details:</h3>
             {updateMode ? <ProfileUpdate userDetails={userDetails} /> : <ProfileDetails userDetails={userDetails}/>}
