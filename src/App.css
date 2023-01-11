@@ -14,6 +14,7 @@ main {
 
 main h1, main h2{
   text-shadow: 2px 2px 2px #333;
+  padding: 1rem 0.75rem;
 }
 
 /* main div {
@@ -74,6 +75,13 @@ i:hover {
   justify-content: space-evenly;
   background-color: #f2f4f7;
   border-radius: 20px;
+}
+
+.attractions h2 {
+  color: #000;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  text-shadow: none;
 }
 
 .attractionCards{

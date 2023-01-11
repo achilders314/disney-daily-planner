@@ -51,8 +51,8 @@ function Nav(){
                     <button className="nav-link nav-item dropdown-toggle border-0 bg-light" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                         <i className="fa-solid fa-user"></i>
                         {currentUser ? 
-                        userData.firstName !== "" ? userData.firstName : currentUser.email : 
-                        "Sign Up or Log In"}
+                        userData.firstName !== "" ? ` ${userData.firstName}` : ` ${currentUser.email}` : 
+                        " Sign Up or Log In"}
                     </button>
                     <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         {currentUser && <li><Link className="dropdown-item" to="/profile">Profile</Link></li>}

@@ -49,8 +49,8 @@ export function AuthProvider({ children }) {
                         trip: [],
                         lastLogin: new Date(),
                 })}
+                navigate("/");
             }).catch((err) => {return err.message});
-            navigate("/");
      }
 
     async function googleLogin(){
@@ -72,10 +72,10 @@ export function AuthProvider({ children }) {
                         trip: [],
                         lastLogin: new Date(),
                 })}
+                navigate("/")
             }).catch((err) => {
                 return err.message;
             })
-            navigate("/")
     }
 
     function logout(){
@@ -123,11 +123,13 @@ export function AuthProvider({ children }) {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
+            setLoading(true)
+            console.log(user)
             setCurrentUser(user);
             async function setupUser(currentUser){
                 await lookupUserDetails(currentUser);
             }
-            if(currentUser !== null & currentUser !== undefined && currentUser.uid){
+            if(user !== null & user !== undefined && user.uid){
                 setupUser(user);
             }
             setLoading(false);
