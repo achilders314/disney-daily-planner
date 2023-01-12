@@ -21,18 +21,19 @@ export default function ProfileDetails() {
             Name: {userData.firstName}
         </p>
         <div>
-            Trip Dates: {(userData.trip === undefined || userData.trip.length === 0) ? 
+            Trip Dates: {(userData.trip === undefined || userData.trip[0].tripStart === "") ? 
             <span className='text-muted fst-italic'>No trips yet, please click the button above to add one.</span> : 
             <span>{userData.trip[0].tripStart} - {userData.trip[0].tripEnd}</span>}          
         </div>
         <div>
             Parks: {
-                (userData.trip === undefined || userData.trip.length === 0) ?
+                (userData.trip === undefined || userData.trip[0].tripStart === "") ?
                 <span className='text-muted fst-italic'>No trips yet, please click the button above to add one.</span> : 
                 <ul>
                     {userData.trip[0].parkDays.map((day, index) => {
                       return( 
-                        <li key={`${day.tripDate}-details`}> Day {index+1}: {day.tripDate} - {day.park} - ({day.attractions.length} attractions)
+                        <li key={`${day.tripDate}-details`}> 
+                        Day {index+1}: {day.tripDate} - {day.park} - ({day.attractions ? day.attractions.length : 0} attractions)
                         </li>  
                       )
                     })}

@@ -8,25 +8,16 @@ import loadingIcon from '../assets/loadingIcon.gif'
 export default function Profile() {
 
     const [updateMode, setUpdateMode] = useState(false);
-    const { loading, userData } = useAuth();
+    const { loading, userData, currentUser } = useAuth();
 
     useEffect(() => {
-        // async function getUserDetails(){
-        // try{
-        //     await lookupUserDetails(currentUser).then(data => {
-        //     setUserDetails(data);
-        //     })        
-        // } catch(e){
-        //     console.log(e);
-        // }
-        // }
-        // getUserDetails();        
+
     }, [userData])
 
     return (
         <main className="d-flex justify-content-center align-items-center flex-column"
         style={{ minHeight: "80vh"}}>
-        {loading ? 
+        {loading || !userData || !currentUser ? 
         <div className="d-flex h-50 justify-content-center align-items-center">
             <img src={loadingIcon} style={{backgroundColor: "white", width: "60px", borderRadius: "50%"}} />
         </div> :

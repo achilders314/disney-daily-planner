@@ -6,7 +6,7 @@
 
 
 main {
-  padding: 2%;
+  padding: 3% 2% 4% 2%;
   background: linear-gradient(45deg, #925D54, #896F7D, #77759A, #7E939A, #e0b78a);
   background-attachment: fixed;
   min-height: 80vh;

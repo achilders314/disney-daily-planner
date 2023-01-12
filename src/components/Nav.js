@@ -5,12 +5,11 @@ import { useAuth } from "../contexts/AuthContext";
 
 function Nav(){
     const [error, setError] = useState("");
-    const { userData, logout, currentUser } = useAuth();
+    const { loading, userData, logout, currentUser } = useAuth();
     const navigation = useNavigate();
 
     async function handleLogout(){
         setError('');
-
         try{
             await logout();
             navigation("/login")
@@ -20,7 +19,7 @@ function Nav(){
     }
 
     useEffect(() => {
-             
+
     }, [userData])
 
     return(
@@ -50,8 +49,8 @@ function Nav(){
                 <li className="nav-item dropdown">
                     <button className="nav-link nav-item dropdown-toggle border-0 bg-light" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                         <i className="fa-solid fa-user"></i>
-                        {currentUser ? 
-                        userData.firstName !== "" ? ` ${userData.firstName}` : ` ${currentUser.email}` : 
+                        {(currentUser && userData) ? 
+                        <span>{userData.firstName !== "" ? ` ${userData.firstName}` : ` ${currentUser.email}`}</span> : 
                         " Sign Up or Log In"}
                     </button>
                     <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">

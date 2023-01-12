@@ -8,7 +8,7 @@ export default function ProfileUpdate() {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [loading, setLoading] = useState(false);
-    const { userData, updateUserDetails } = useAuth();
+    const { userData, updateUserDetails, currentUser } = useAuth();
     const nameRef = useRef();
     const tripStartRef = useRef();
     const tripEndRef = useRef();
@@ -19,7 +19,7 @@ export default function ProfileUpdate() {
 
     async function handleSubmit(e){
         e.preventDefault();
-        try{
+        // try{
             setLoading(true);
             setError('');
             setSuccess('');
@@ -40,26 +40,30 @@ export default function ProfileUpdate() {
                 return setError("Start date must be before or same as end date.")
             } else if(tripStart < today){
                 return setError("Trip dates must be in the future.")
-            } else if(userData.trip.length > 0 && tripStart.toDateString() === userData.trip[0].tripStart && 
+            } else if(tripStart.toDateString() === userData.trip[0].tripStart && 
                       tripEnd.toDateString() === userData.trip[0].tripEnd){
               console.log("dates are the same");
               let parkDays = userData.trip[0].parkDays;
               parkDays.map((day) => {
-                let {tripDate, park, attractions} = day;
-                console.log(day);
+                let {tripDate, park} = day;
                 let selection = document.getElementById(tripDate);
                 park = selection.value;
                 day.park = park;
                 return day;
             })
-              await updateUserDetails({ 
+             let update = {}
+             update[`users/${currentUser.uid}/`] = {
                 firstName: nameRef.current.value,
+                email: currentUser.email,
+                lastActivity: new Date(),
                 trip:[{
                     tripStart: tripStart.toDateString(),
                     tripEnd: tripEnd.toDateString(),
                     parkDays: parkDays,
                 }]
-            })
+             }
+             await updateUserDetails(update);
+            
             } else{
                 console.log("catch all")
                 let parkDays = [];
@@ -70,29 +74,30 @@ export default function ProfileUpdate() {
                     let tripDaySummary = {
                       tripDate: thisDate.toDateString(),
                       park: "None",
-                      attractions: [],
                     }
                     parkDays.push(tripDaySummary);
                   }
-                let userUpdate = {
-                    firstName: nameRef.current.value,
-                    trip: [{
-                        tripStart: tripStart.toDateString(),
-                        tripEnd: tripEnd.toDateString(),
-                        parkDays: parkDays,
-                    }],
-                    lastActivity: new Date(), 
-                }
-                await updateUserDetails(userUpdate);
+                  let update = {}
+                  update[`users/${currentUser.uid}/`] = {
+                     firstName: nameRef.current.value,
+                     email: currentUser.email,
+                     lastActivity: new Date(),
+                     trip:[{
+                         tripStart: tripStart.toDateString(),
+                         tripEnd: tripEnd.toDateString(),
+                         parkDays: parkDays,
+                     }]
+                  }
+                await updateUserDetails(update);
             }
             setLoading(false)
             setError('');
             return setSuccess('Profile updated successfully.')
-        } catch(err){
-            console.log(err.message)
-            setLoading(false)
-            return setError('Failed to update details. Please try again.')
-        }
+        // } catch(err){
+        //     console.log(err.message)
+        //     setLoading(false)
+        //     return setError('Failed to update details. Please try again.')
+        // }
 
     }
   return (

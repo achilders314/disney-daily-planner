@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useAuth } from '../contexts/AuthContext';
 
 function SingleAttraction(props){
-    const [checked, setChecked] = useState(false);
     const attraction = props.attraction;
     const {currentUser} = useAuth();
     let timestamp = new Date(attraction.data.lastUpdated);
@@ -29,18 +28,19 @@ function SingleAttraction(props){
     }
 
     const activeStateChange = (e) => {
-        setChecked(e.target.checked);
+        props.onChange(e.target.value.toString());
     }
 
     return(
-        <div key={attraction.name} className="attractionCards" style={{backgroundColor: checked ? "#c1d0e8" : "#fff"}}>
+        <div key={attraction.name} className="attractionCards" style={{backgroundColor: attraction.isChecked ? "#c1d0e8" : "#fff"}}>
                         <div className="attraction-header">
                             <h5>{attraction.name}</h5>
                             <div className="form-check form-check-inline">
-                                {currentUser ?
-                                <input className="form-check-input" 
-                                    type="checkbox" id="inlineCheckbox1" 
-                                    value="option1"
+                                {props.loggedIn ?
+                                <input className="form-check-input"
+                                    checked={attraction.isChecked}
+                                    type="checkbox" id={`inline-checkbox-${attraction.name}`}
+                                    value={`${attraction.name}`}
                                     onChange={activeStateChange} /> :
                                     ""}
                             </div>
