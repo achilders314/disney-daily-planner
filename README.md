@@ -1,11 +1,13 @@
 # Disney Daily Planner Web App (in Progress)
 An app created with React/Firebase that allows users to plan their trip at Walt Disney World using wait time data from the [Themepark API](https://api.themeparks.wiki/docs/v1/)
 
-[Live Site (Visit "Attractions" page to see where it's headed)](https://disney-daily-planner-dbad2.web.app/)
+[Live Site (Visit "Attractions" page, or create an account, update your profile, & begin choosing attractions!)](https://disney-daily-planner-dbad2.web.app/)
 ![Image of Disney Daily Planner](https://user-images.githubusercontent.com/102301042/209495887-9bcc1414-42c5-4697-9976-bf65be6f0a8d.png)
 
 ### Description
-In this React/Firebase project, I have a Google cloud function set up to gather data each hour from the Themeparks API. This displays in the app and my plan is to allow users to click the checkboxes and add the attractions to their visit. They will then be able to schedule out times that they'd like to visit the attractions each day of their trip, and print an itinerary if desired.
+In this React/Firebase project, I have a Google cloud function set up to gather data each hour from the Themeparks API. This displays in the app and users can (as of 1/13/23) create an account using either email/password or Google authentication through Firebase, update their profile with Name, Trip Dates, Parks, and then when they visit the "Attractions" page they can select which attractions to add for each day. These will then display on the "My Trip" page. 
+
+The next step is to allow users to take these trips they've added and build a detailed itinerary for each day they spend at Disney. They will also be allowed to add custom items, such as lunch, breaks, shopping, etc.
 
 ### Technologies Used
 - Google Firebase Realtime Database
@@ -19,7 +21,7 @@ In this React/Firebase project, I have a Google cloud function set up to gather 
 ### Features
 - List of attractions in alphabetical order, sorted by park
 - Each attraction has current wait time as well as average wait times from the last 14 days for each hour.
-- Checkboxes to select which attractions to add to your trip (coming soon)
+- Checkboxes to select which attractions to add to your trip
 - Ability to schedule times you want to block off for attracitons (coming soon)
 - Ability to add a custom item (like breaks/meals, Disney Springs excursions, etc) (coming soon)
 - Ability to print your schedule (coming soon)
@@ -27,8 +29,13 @@ In this React/Firebase project, I have a Google cloud function set up to gather 
 
 ### Lessons Learned
 - Setting up my own Firebase back end.
-- Setting up hosting through Firebase
+- Setting up hosting through Firebase.
 - Working more fluently with React Hooks.
+- Handling State and using useEffect to deal with side effects.
+- Sending state back up from child to parent components.
+- Setting up authentication through Firebase.
+- Creating a context using the useContext hook to handle user data that gets used throughout the app.
+
 
 
 ## Available Scripts
