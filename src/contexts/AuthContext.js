@@ -10,7 +10,7 @@ import {
 import React, { useContext, useEffect, useState } from 'react';
 import { auth, googleProvider, rtdb, app } from '../firebase-config';
 // import { doc, getDoc, setDoc, collection, updateDoc } from 'firebase/firestore';
-import { ref, set, get, onValue, update, child, getDatabase } from 'firebase/database';
+import { ref, set, get, update, child, getDatabase } from 'firebase/database';
 import { useNavigate } from 'react-router-dom';
 
 const AuthContext = React.createContext();

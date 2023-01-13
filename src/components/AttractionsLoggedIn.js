@@ -1,10 +1,8 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 import { Link } from 'react-router-dom';
 import SingleAttraction from './SingleAttraction'
 import { Form, Button, Alert } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext';
-import { db } from '../firebase-config';
-import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
 
 
 export default function AttractionsLoggedIn(props){
@@ -13,16 +11,15 @@ export default function AttractionsLoggedIn(props){
     const [selectedPark, setSelectedPark] = useState("");
     const [attractions, setAttractions] = useState([]);
     const [selectedAttractions, setSelectedAttractions] = useState([]);
-    const [success, setSuccess] = useState('')
-    const [error, setError] = useState('')
-    let dateSelector = document.getElementById("trip-date-selector")
-
+    const [success, setSuccess] = useState('');
+    const [error, setError] = useState('');
+    let dateSelector = useRef();
+    
     function changeTripDay(){
         setError('')
         setSuccess('')
-        let dateSelector = document.getElementById("trip-date-selector")
-        if(dateSelector){
-            let parkDayFilter = userData.trip[0].parkDays.filter((day) => day.tripDate === dateSelector.value);
+        if(dateSelector.current.value){
+            let parkDayFilter = userData.trip[0].parkDays.filter((day) => day.tripDate === dateSelector.current.value);
             setSelectedPark(parkDayFilter[0].park === "None" ? "" : parkDayFilter[0].park);
         }
         setSelectedAttractions([])
@@ -50,15 +47,12 @@ export default function AttractionsLoggedIn(props){
         if(selectedAttractionsCopy.length === 0){
             return setError("Please select at least one attraction to add.")
         }
-        console.log(selectedAttractionsCopy)
-        let dateSelector = document.getElementById("trip-date-selector")
-        if(dateSelector){
-            let parkDayFilter = userData.trip[0].parkDays.filter((day) => day.tripDate === dateSelector.value);
+        if(dateSelector.current.value){
+            let parkDayFilter = userData.trip[0].parkDays.filter((day) => day.tripDate === dateSelector.current.value);
             let tripDayIndex = userData.trip[0].parkDays.findIndex((day) => day === parkDayFilter[0]);
             let attractionsCopy = parkDayFilter[0].attractions;
             let result = !attractionsCopy ? selectedAttractionsCopy : [...new Set([...attractionsCopy, ...selectedAttractionsCopy])]
             userData.trip[0].parkDays[tripDayIndex].attractions = result;
-            console.log(userData.trip)
             let tripCopy = userData.trip;
             let update = {};
             update[`users/${currentUser.uid}/trip`] = tripCopy
@@ -77,13 +71,11 @@ export default function AttractionsLoggedIn(props){
 
     useEffect(() => {
         function initialSelectedPark(){
-            console.log(userData)
-            let dateSelector = document.getElementById("trip-date-selector")
             if(userData && userData.trip && userData.trip.length && userData.trip[0].parkDays){
-            if(dateSelector){
+            if(dateSelector.current.value){
                 /*  filters out all of the park day entries to only the one selected in the drop-down - should be an array
                 with length 1.  */
-                let parkDayFilter = userData.trip[0].parkDays.filter((day) => day.tripDate === dateSelector.value);
+                let parkDayFilter = userData.trip[0].parkDays.filter((day) => day.tripDate === dateSelector.current.value);
                 setSelectedPark(parkDayFilter[0].park === "None" ? "" : parkDayFilter[0].park);
                 return parkDayFilter;
             }
@@ -103,11 +95,11 @@ export default function AttractionsLoggedIn(props){
             setAttractions(modifiedAttractions);
                                                     }
         let initialPark = initialSelectedPark();
-        if(initialPark !== null){
+        if(initialPark){
             loadUserAttractions(initialPark);
         }
         
-    }, [userData, dateSelector])
+    }, [userData])
 
   return (
 
@@ -119,6 +111,7 @@ export default function AttractionsLoggedIn(props){
                         <Form.Control id="trip-date-selector" as="select" type="select" 
                                     defaultValue={userData.trip.length > 0 ? userData.trip[0].parkDays[0].tripDate : ""} 
                                     onChange={changeTripDay}
+                                    ref={dateSelector}
                                     required>
                                 {userData.trip[0].parkDays.map((day) => {
                                     return <option key={day.tripDate} value={day.tripDate}>{day.tripDate} ({day.park})</option>

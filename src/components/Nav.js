@@ -5,7 +5,7 @@ import { useAuth } from "../contexts/AuthContext";
 
 function Nav(){
     const [error, setError] = useState("");
-    const { loading, userData, logout, currentUser } = useAuth();
+    const { userData, logout, currentUser } = useAuth();
     const navigation = useNavigate();
 
     async function handleLogout(){

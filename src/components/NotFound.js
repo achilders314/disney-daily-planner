@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import mickeyImage from '../assets/mickey-placeholder.jpg'
-import { Container } from 'react-bootstrap'
 
 
 export default function NotFound() {

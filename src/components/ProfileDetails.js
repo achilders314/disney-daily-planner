@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import { useAuth } from '../contexts/AuthContext';
 
 export default function ProfileDetails() {
-    const { loading, userData } = useAuth();
+    const { userData } = useAuth();
 
     useEffect(() => {
         

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Form, Button } from 'react-bootstrap';
@@ -10,14 +10,13 @@ export default function MyTrip() {
   const [unscheduled, setUnscheduled] = useState([]);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  let dateSelector = document.getElementById("itinerary-date-selector")
+  let dateSelector = useRef();
 
   function changeTripDay(){
       setError('')
       setSuccess('')
-      let dateSelector = document.getElementById("itinerary-date-selector")
-      if(dateSelector){
-          let parkDayFilter = userData.trip[0].parkDays.filter((day) => day.tripDate === dateSelector.value);
+      if(dateSelector.current.value){
+          let parkDayFilter = userData.trip[0].parkDays.filter((day) => day.tripDate === dateSelector.current.value);
           const scheduledAttractions = parkDayFilter[0].attractions ? 
                                   parkDayFilter[0].attractions.filter((attraction) => attraction.startTime !== "") : 
                                   [];
@@ -27,18 +26,15 @@ export default function MyTrip() {
           setScheduled(scheduledAttractions);
           setUnscheduled(unscheduledAttractions);
       }
-      console.log(scheduled)
   }
   
   useEffect(() => {
     function initialSelectedPark(){
-      console.log(userData)
-      let dateSelector = document.getElementById("itinerary-date-selector")
       if(userData && userData.trip && userData.trip.length && userData.trip[0].parkDays){
-      if(dateSelector){
+      if(dateSelector.current.value){
           /*  filters out all of the park day entries to only the one selected in the drop-down - should be an array
           with length 1.  */
-          let parkDayFilter = userData.trip[0].parkDays.filter((day) => day.tripDate === dateSelector.value);
+          let parkDayFilter = userData.trip[0].parkDays.filter((day) => day.tripDate === dateSelector.current.value);
           return parkDayFilter;
       }
       }
@@ -57,7 +53,6 @@ export default function MyTrip() {
     }
 
     let initialPark = initialSelectedPark();
-    console.log(initialPark)
     if(initialPark !== null){
         loadUserAttractions(initialPark);
     }
@@ -70,7 +65,7 @@ export default function MyTrip() {
           style={{ minHeight: "80vh"}}>
         {loading || !userData ?
         <div className="d-flex h-50 justify-content-center align-items-center">
-          <img src={loadingIcon} style={{backgroundColor: "white", width: "60px", borderRadius: "50%"}} />
+          <img src={loadingIcon} alt="loading spinner" style={{backgroundColor: "white", width: "60px", borderRadius: "50%"}} />
         </div> :
         <>
           <h2 className="text-white mb-4">My Trip</h2>
@@ -102,6 +97,7 @@ export default function MyTrip() {
                             <Form.Label className="text-white">Itinerary For:</Form.Label>
                             <Form.Control id="itinerary-date-selector" as="select" type="select" 
                                         defaultValue={userData.trip[0].parkDays[0].tripDate} 
+                                        ref={dateSelector}
                                         onChange={changeTripDay}
                                         required>
                                     {userData.trip[0].parkDays.map((day) => {

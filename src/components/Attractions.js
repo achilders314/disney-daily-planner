@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useEffect }  from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import AttractionsLoggedIn from './AttractionsLoggedIn'
 import AttractionsLoggedOut from './AttractionsLoggedOut';
@@ -19,10 +19,10 @@ export default function Attractions(props){
         <main>            
                 {loading || !userData ? 
                 <div className="d-flex h-50 justify-content-center align-items-center">
-                    <img src={loadingIcon} style={{backgroundColor: "white", width: "60px", borderRadius: "50%"}} />
+                    <img src={loadingIcon} alt="loading spinner" style={{backgroundColor: "white", width: "60px", borderRadius: "50%"}} />
                 </div> :
                 <>
-                    {userData && userData.trip && userData.trip[0].tripStart !== "" && userData.trip[0].parkDays[0].park ? //user has trip & park data
+                    {Object.keys(userData).length > 0 && userData.trip[0].tripStart !== "" ? //user has trip & park data
                         <AttractionsLoggedIn parks={parks} attractions={attractions} />: 
                         <AttractionsLoggedOut parks={parks} attractions={attractions} />
                     }

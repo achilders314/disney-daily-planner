@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext';
 
 function SingleAttraction(props){
+
     const attraction = props.attraction;
-    const {currentUser} = useAuth();
+    const {loading} = useAuth();
     let timestamp = new Date(attraction.data.lastUpdated);
-    let day = timestamp.getDay();
+    // let day = timestamp.getDay();
     let today = new Date();
     let waitTimes8 = Math.round(attraction.data.waitTimeAvg[8].reduce((a,b) => {return a+b}) / attraction.data.waitTimeAvg[8].length);
     let waitTimes9 = Math.round(attraction.data.waitTimeAvg[9].reduce((a,b) => {return a+b}) / attraction.data.waitTimeAvg[9].length);
@@ -31,7 +32,12 @@ function SingleAttraction(props){
         props.onChange(e.target.value.toString());
     }
 
+    useEffect(() => {
+
+    }, [loading])
+
     return(
+        loading ? "" :
         <div key={attraction.name} className="attractionCards" style={{backgroundColor: attraction.isChecked ? "#c1d0e8" : "#fff"}}>
                         <div className="attraction-header">
                             <h5>{attraction.name}</h5>

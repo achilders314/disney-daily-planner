@@ -19,7 +19,7 @@ export default function Profile() {
         style={{ minHeight: "80vh"}}>
         {loading || !userData || !currentUser ? 
         <div className="d-flex h-50 justify-content-center align-items-center">
-            <img src={loadingIcon} style={{backgroundColor: "white", width: "60px", borderRadius: "50%"}} />
+            <img src={loadingIcon} alt="loading spinner" style={{backgroundColor: "white", width: "60px", borderRadius: "50%"}} />
         </div> :
         <>
             <h2 className="text-white mb-4">{userData.firstName === "" || userData.firstName === undefined ?

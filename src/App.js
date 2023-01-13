@@ -1,8 +1,8 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { app } from './firebase-config'
 // import { collection, getDocs, addDoc, deleteDoc, doc, query, where } from 'firebase/firestore'
-import { Routes, Route, Switch } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 import { ref, get, getDatabase, child } from 'firebase/database'
 import Nav from './components/Nav'
@@ -19,16 +19,12 @@ import NotFound from './components/NotFound'
 import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
-  // const [newEmail, setNewEmail] = useState("")
-  // const [newName, setNewName] = useState("")
-  // const [users, setUsers] = useState([])
-  // const usersCollectionRef = collection(db, "users")
   const parksCollectionRef = child(ref(getDatabase(app)), '/parks/')
   const attractionCollectionRef = child(ref(getDatabase(app)), '/attractions/')
   const [parks, setParks] = useState([])
   const [attractions, setAttractions] = useState([])
-  const [restaurants, setRestaurants] = useState([])
-  const [shows, setShows] = useState([])
+  // const [restaurants, setRestaurants] = useState([])
+  // const [shows, setShows] = useState([])
 
   useEffect(() => {
 
@@ -37,8 +33,8 @@ function App() {
       let parkIds;
       let attractionData;
       let attractionKeys;
-      let showKeys;
-      let restaurantKeys;
+      // let showKeys;
+      // let restaurantKeys;
       await get(parksCollectionRef).then((snap) => {
         if(snap.exists()){
           parkData = snap.val();
@@ -60,11 +56,11 @@ function App() {
         if(snap.exists()){
           attractionData = snap.val();
           attractionKeys = Object.keys(attractionData.ATTRACTION)
-          restaurantKeys = Object.keys(attractionData.RESTAURANT)
-          showKeys = Object.keys(attractionData.SHOW)
+          // restaurantKeys = Object.keys(attractionData.RESTAURANT)
+          // showKeys = Object.keys(attractionData.SHOW)
           setAttractions(attractionKeys.map((ride) => {return {name: ride, data: attractionData.ATTRACTION[ride]}}));
-          setRestaurants(restaurantKeys.map((restaurant) => {return {name: restaurant, data: attractionData.RESTAURANT[restaurant]}}));
-          setShows(showKeys.map((show) => {return {name: show, data: attractionData.SHOW[show]}}));
+          // setRestaurants(restaurantKeys.map((restaurant) => {return {name: restaurant, data: attractionData.RESTAURANT[restaurant]}}));
+          // setShows(showKeys.map((show) => {return {name: show, data: attractionData.SHOW[show]}}));
         }
         else{
           console.log("No data")
