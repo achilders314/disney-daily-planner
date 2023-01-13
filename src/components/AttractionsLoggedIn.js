@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import SingleAttraction from './SingleAttraction'
 import { Form, Button, Alert } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext';
+import { useAttractions } from '../contexts/AttractionContext';
 
 
 export default function AttractionsLoggedIn(props){
-    const parks = props.parks;
+    const { attractions, parks, attractionsLoading } = useAttractions();
     const { userData, currentUser, lookupUserDetails, updateUserDetails } = useAuth();
     const [selectedPark, setSelectedPark] = useState("");
-    const [attractions, setAttractions] = useState([]);
+    const [ modAttractions, setModAttractions ] = useState([]);
     const [selectedAttractions, setSelectedAttractions] = useState([]);
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
@@ -20,7 +21,7 @@ export default function AttractionsLoggedIn(props){
         setSuccess('')
         if(dateSelector.current.value){
             let parkDayFilter = userData.trip[0].parkDays.filter((day) => day.tripDate === dateSelector.current.value);
-            setSelectedPark(parkDayFilter[0].park === "None" ? "" : parkDayFilter[0].park);
+            setSelectedPark(parkDayFilter[0].park === "None" ? "None" : parkDayFilter[0].park);
         }
         setSelectedAttractions([])
     }
@@ -28,17 +29,15 @@ export default function AttractionsLoggedIn(props){
     function changeCheckedStatus(attractionName){
         setError('')
         setSuccess('')
-        console.log(attractionName)
-        let attractionsCopy = attractions;
+        let attractionsCopy = modAttractions;
         let attractionsEntry = attractionsCopy.findIndex((attraction) => attraction.name === attractionName);
         attractionsCopy[attractionsEntry].isChecked = !attractionsCopy[attractionsEntry].isChecked;
-        setAttractions(attractionsCopy)
-        setSelectedAttractions(attractions.filter((attraction) => attraction.isChecked));     
+        setModAttractions(attractionsCopy)
+        setSelectedAttractions(modAttractions.filter((attraction) => attraction.isChecked));     
     }
 
     async function addToTrip(e){
         e.preventDefault();
-        // setAddedAttractions(false);
         // try{
         let selectedAttractionsCopy = selectedAttractions;
         selectedAttractionsCopy = selectedAttractionsCopy.map((attraction) => {
@@ -66,40 +65,44 @@ export default function AttractionsLoggedIn(props){
     //     console.log(err.message);
     //     return setError("An error has occurred, please try again.");
     // }
-        // setAddedAttractions(false);
+    }
+
+    function initialSelectedPark(){
+        if(Object.keys(userData).length > 0 && userData.trip[0].parkDays){
+        if(dateSelector.current.value){
+            /*  filters out all of the park day entries to only the one selected in the drop-down - should be an array
+            with length 1.  */
+            let parkDayFilter = userData.trip[0].parkDays.filter((day) => day.tripDate === dateSelector.current.value);
+            setSelectedPark(parkDayFilter[0].park === "None" ? "" : parkDayFilter[0].park);
+            return parkDayFilter;
+        }
+        }
+        return null;
+    }
+
+    function loadUserAttractions(parkDayFilter){
+        console.log("loading!")
+        const currentAttractions = parkDayFilter[0].attractions ? 
+                                   parkDayFilter[0].attractions.map((current) => current.name) : 
+                                   [];
+        const modifiedAttractions = attractions.map((attraction) => {return {...attraction, isChecked: false, startTime: "", endTime: ""}})
+                                                .filter((attraction) => {
+                                                return !currentAttractions.includes(attraction.name);
+                                                })
+        return setModAttractions(modifiedAttractions);
     }
 
     useEffect(() => {
-        function initialSelectedPark(){
-            if(userData && userData.trip && userData.trip.length && userData.trip[0].parkDays){
-            if(dateSelector.current.value){
-                /*  filters out all of the park day entries to only the one selected in the drop-down - should be an array
-                with length 1.  */
-                let parkDayFilter = userData.trip[0].parkDays.filter((day) => day.tripDate === dateSelector.current.value);
-                setSelectedPark(parkDayFilter[0].park === "None" ? "" : parkDayFilter[0].park);
-                return parkDayFilter;
+        async function setUpAttractions(){
+            let initialPark = await initialSelectedPark();
+            if(await initialPark && await attractions){
+                loadUserAttractions(initialPark);
             }
-            }
-            return null;
         }
-        function loadUserAttractions(parkDayFilter){
-            const attractionProps = props.attractions;
-            const currentAttractions = parkDayFilter[0].attractions ? 
-                                       parkDayFilter[0].attractions.map((current) => current.name) : 
-                                       [];
-            console.log(currentAttractions)
-            const modifiedAttractions = attractionProps.map((attraction) => {return {...attraction, isChecked: false, startTime: "", endTime: ""}})
-                                                       .filter((attraction) => {
-                                                        return !currentAttractions.includes(attraction.name)
-                                                        })
-            setAttractions(modifiedAttractions);
-                                                    }
-        let initialPark = initialSelectedPark();
-        if(initialPark){
-            loadUserAttractions(initialPark);
-        }
+
+        setUpAttractions();
         
-    }, [userData])
+    }, [userData, dateSelector, attractionsLoading, attractions])
 
   return (
 
@@ -122,7 +125,7 @@ export default function AttractionsLoggedIn(props){
                 <Button onClick={addToTrip}>Add {selectedAttractions.length} to Trip</Button>
             </div>
             {
-            selectedPark === 'None' || selectedPark === "" ? 
+            selectedPark === 'None' || selectedPark === "" || attractionsLoading ? 
             <div>
                 <div className="attractions py-4">
                     <p>You have no parks selected for this date. Please go to your <Link to="/profile">Profile</Link> to select one
@@ -141,8 +144,9 @@ export default function AttractionsLoggedIn(props){
                                 <h1 key={`${park.data.name}`}>Name: {park.data.name}</h1>
                                 <div className="attractions">
                                 <h2>Attractions</h2>
-                                {attractions.filter(attraction => attraction.data.parkId === park.parkId).map((attraction => {
-                                                        
+                                {modAttractions.filter(attraction => {
+                                   return attraction.data.parkId === park.parkId
+                                }).map((attraction => {
                                     return(
                                         <SingleAttraction loggedIn={true} onChange={changeCheckedStatus} key={attraction.name} attraction={attraction}/>
                                     )
