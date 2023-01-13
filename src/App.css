@@ -17,9 +17,9 @@ main h1, main h2{
   padding: 1rem 0.75rem;
 }
 
-/* main div {
-  background-color: #fff;
-} */
+main > div {
+  width: 85%;
+}
 /* .nav-item {
   color: #777;
 }
@@ -97,6 +97,18 @@ i:hover {
   background-color: rgb(69, 72, 218);
 }
 
+#attractions-day-filter, #my-trip-date{
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  margin: 0 0 1rem 0;
+}
+
+#attractions-day-filter Button, #my-trip-date Button{
+  margin-top: 0;
+  margin-left: 1rem;
+}
+
 .attraction-header{
   display: flex;
   align-items: center;
@@ -148,6 +160,10 @@ i:hover {
   text-align: center;
 }
 
+.profile-update-form{
+  width: 50%;
+}
+
 @media screen and (max-width: 1240px) {
   .attractionCards {
     width: 30%;
@@ -158,11 +174,37 @@ i:hover {
   .attractionCards {
     width: 40%;
   }
+
+  .profile-update-form{
+    width: 75%;
+  }
 }
 
 @media screen and (max-width: 710px) {
+  
+  main > div {
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+  }
+
   .attractionCards {
     width: 85%;
+  }
+
+  #attractions-day-filter, #my-trip-date{
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 1rem 1rem 1rem 1rem;
+  }
+
+  #attractions-day-filter Button, #my-trip-date Button{
+    margin-top: 1rem;
+    margin-left: 0;
+  }
+
+  .profile-update-form{
+    width: 100%;
   }
 
 }

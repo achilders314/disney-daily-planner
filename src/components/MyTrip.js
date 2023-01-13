@@ -69,7 +69,7 @@ export default function MyTrip() {
         </div> :
         <>
           <h2 className="text-white mb-4">My Trip</h2>
-          <div className="bg-white rounded p-4 w-75">
+          <div className="bg-white rounded p-4">
             <p>(Coming Soon) Soon, you'll be able to create a customized schedule for your 
               Walt Disney World trip! Keep visiting this page regularly as updates come out.
             </p>
@@ -91,10 +91,10 @@ export default function MyTrip() {
               <h3>Itinerary:</h3>
               {userData.trip[0].tripStart === "" ? 
                 "" :
-                <div className="d-flex justify-content-between align-items-end my-1 mx-4">
+                <div className="d-flex justify-content-center" id="my-trip-date">
                     <Form >
                         <Form.Group>
-                            <Form.Label className="text-white">Itinerary For:</Form.Label>
+                            <Form.Label>Itinerary For:</Form.Label>
                             <Form.Control id="itinerary-date-selector" as="select" type="select" 
                                         defaultValue={userData.trip[0].parkDays[0].tripDate} 
                                         ref={dateSelector}

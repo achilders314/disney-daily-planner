@@ -100,24 +100,24 @@ export default function ProfileUpdate() {
 
     }
   return (
-    <Form>
+    <Form className="profile-update-form">
         <p className="text-danger">Warning: changing your trip dates will erase any saved itineraries you may have created.</p>
         <p>Email: {userData.email}</p>
         {error && <Alert variant="danger">{error}</Alert>}
         {success && <Alert variant="success">{success}</Alert>}
         <Form.Group className="my-2" id="first-name">
             <Form.Label>Name: </Form.Label>
-            <Form.Control className="w-50" type="text" ref={nameRef} defaultValue={userData.firstName} required />
+            <Form.Control className="" type="text" ref={nameRef} defaultValue={userData.firstName} required />
         </Form.Group>
         <Form.Group className="my-2" id="trip-start">
             <Form.Label>Trip Start: </Form.Label>
-            <Form.Control as="input" className="w-50" type="date" ref={tripStartRef} 
+            <Form.Control as="input" className="" type="date" ref={tripStartRef} 
                           defaultValue={userData && userData.trip.length > 0 ?
                             new Date(userData.trip[0].tripStart) : today} required />
         </Form.Group>
         <Form.Group className="my-2" id="trip-end">
             <Form.Label>Trip End: </Form.Label>
-            <Form.Control as="input" className="w-50" type="date" ref={tripEndRef} 
+            <Form.Control as="input" className="" type="date" ref={tripEndRef} 
                           defaultValue={userData.trip.length > 0 ?
                             new Date(userData.trip[0].tripEnd) : tomorrow} required />
         </Form.Group>
@@ -128,7 +128,7 @@ export default function ProfileUpdate() {
                 return(
                 <Form.Group className="my-2" key={`${day.tripDate}-group`}>
                     <Form.Label key={`${day.tripDate}-label`}>Day {index+1}: {day.tripDate}</Form.Label>
-                    <Form.Control key={day.tripDate} id={day.tripDate} as="select" className="w-50" type="select" 
+                    <Form.Control key={day.tripDate} id={day.tripDate} as="select" className="" type="select" 
                                 defaultValue={day.park} required>
                             <option value={"None"}>None</option>
                             <option value={"Magic Kingdom Park"}>Magic Kingdom</option>
@@ -139,7 +139,7 @@ export default function ProfileUpdate() {
                 </Form.Group>
                 )
             }) : ""}
-        <Button variant="success" className="w-50" type="submit" disabled={loading} onClick={(e) => handleSubmit(e)}>Save Changes</Button>
+        <Button variant="success" className="" type="submit" disabled={loading} onClick={(e) => handleSubmit(e)}>Save Changes</Button>
     </Form>
   )
 }

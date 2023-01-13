@@ -107,8 +107,8 @@ export default function AttractionsLoggedIn(props){
   return (
 
         <>
-            <div className="d-flex justify-content-between align-items-end my-4 mx-4">
-                <Form >
+            <div id="attractions-day-filter" className="d-flex">
+                <Form>
                     <Form.Group>
                         <Form.Label className="text-white">Trip Day:</Form.Label>
                         <Form.Control id="trip-date-selector" as="select" type="select" 
