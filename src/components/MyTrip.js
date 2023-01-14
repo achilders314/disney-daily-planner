@@ -5,7 +5,7 @@ import { Form, Button } from 'react-bootstrap';
 import loadingIcon from '../assets/loadingIcon.gif'
 
 export default function MyTrip() {
-  const { userData, loading } = useAuth();
+  const { currentUser, userData, loading, updateUserDetails, lookupUserDetails } = useAuth();
   const [scheduled, setScheduled] = useState([]);
   const [unscheduled, setUnscheduled] = useState([]);
   const [error, setError] = useState('');
@@ -27,19 +27,34 @@ export default function MyTrip() {
           setUnscheduled(unscheduledAttractions);
       }
   }
+
+  function initialSelectedPark(){
+    if(userData && userData.trip && userData.trip.length && userData.trip[0].parkDays){
+    if(dateSelector.current.value){
+        /*  filters out all of the park day entries to only the one selected in the drop-down - should be an array
+        with length 1.  */
+        let parkDayFilter = userData.trip[0].parkDays.filter((day) => day.tripDate === dateSelector.current.value);
+        return parkDayFilter;
+    }
+    }
+    return null;
+}
+
+  async function deleteAttraction(attractionName){
+    let parkDayFilter = await initialSelectedPark();
+    let currentAttractions = parkDayFilter[0].attractions;
+    let tripDayIndex = userData.trip[0].parkDays.findIndex((day) => day.tripDate === parkDayFilter[0].tripDate);
+    const attractionsCopy = currentAttractions.map((attraction) => attraction.name);
+    const attractionIndex = attractionsCopy.indexOf(attractionName);
+    currentAttractions.splice(attractionIndex, 1);
+    let update = {}
+    update[`users/${currentUser.uid}/trip/0/parkDays/${tripDayIndex}/attractions`] = currentAttractions;
+    await updateUserDetails(update);
+    await lookupUserDetails();
+
+  }
   
   useEffect(() => {
-    function initialSelectedPark(){
-      if(userData && userData.trip && userData.trip.length && userData.trip[0].parkDays){
-      if(dateSelector.current.value){
-          /*  filters out all of the park day entries to only the one selected in the drop-down - should be an array
-          with length 1.  */
-          let parkDayFilter = userData.trip[0].parkDays.filter((day) => day.tripDate === dateSelector.current.value);
-          return parkDayFilter;
-      }
-      }
-      return null;
-  }
 
     function loadUserAttractions(parkDayFilter){
         const scheduledAttractions = parkDayFilter[0].attractions ? 
@@ -108,31 +123,49 @@ export default function MyTrip() {
                     </Form>
                     <Button>Update Itinerary</Button>
                 </div>}
-                <div className="itinerary-current">
-                  <h4 className="mt-4">Currently Scheduled:</h4>
-                  
-                    {scheduled === [] ?
-                    <p>No events scheduled yet</p> :
-                    <ul>
-                      {scheduled.map((attraction) => {
-                      return <li>{attraction.name}</li>
-                      })}
-                    </ul>
-                    }
+                <section className="d-flex" id="itinerary-container">
+                  <div className="itinerary-current">
+                    <h4>Currently Scheduled:</h4>
+                    
+                      {scheduled === [] ?
+                      <p>No events scheduled yet</p> :
+                      <>
+                        {scheduled.map((attraction) => {
+                        return (
+                          <div key={attraction.name} className="itinerary-card d-flex">
+                            <h6 className="w-100">{attraction.name}</h6>
+                            <input type="time" defaultValue={attraction.startTime} />
+                            {" - "}
+                            <input type="time" defaultValue={attraction.endTime} />
+                            <i className="fa-solid fa-trash" onClick={()=>deleteAttraction(attraction.name)}></i>
+                          </div>
+                        )
+                        })}
+                      </>
+                      }
 
-                </div>
-                <div className="itinerary-current">
-                  <h4 className="mt-4">Unscheduled Items:</h4>
-                    {unscheduled === [] ?
-                    <p>No events added yet.</p> :
-                    <ul>
-                      {unscheduled.map((attraction) => {
-                      return <li>{attraction.name}</li>
-                      })}
-                    </ul>
-                    }
+                  </div>
+                  <div className="itinerary-current">
+                    <h4>Unscheduled Items:</h4>
+                      {unscheduled === [] ?
+                      <p>No events added yet.</p> :
+                      <div className="d-flex itinerary-cards-flex">  
+                        {unscheduled.map((attraction) => {
+                          return(
+                            <div key={attraction.name} className="itinerary-card d-flex">
+                              <h6 className="w-100">{attraction.name}</h6>
+                              <input type="time" className="form-control time" defaultValue={new Date().getTime()} />
+                              {" - "}
+                              <input type="time" className="form-control time" defaultValue={attraction.endTime} />
+                              <i className="fa-solid fa-trash mx-1" onClick={()=>deleteAttraction(attraction.name)}></i>
+                            </div>
+                          )
+                          })}
+                      </div>
+                      }
 
-                </div>
+                  </div>
+                  </section>
             </div>
           
             

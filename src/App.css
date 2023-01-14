@@ -42,6 +42,41 @@ main > div {
   display: flex;
 }
 
+#itinerary-container{
+  justify-content: space-evenly;
+  align-items: stretch;
+}
+
+.itinerary-current{
+  width: 45%;
+  background-color: #e9e9e9;
+  border-radius: 20px;
+  padding: 1rem;
+}
+
+.itinerary-cards-flex {
+  flex-direction: column;
+}
+
+.itinerary-card{
+  flex-direction: row;
+  flex-wrap: wrap;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  margin: 0.5rem;
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px #757575;
+}
+
+.itinerary-card input{
+  font-size: .9rem;
+  width: 30%;
+}
+
+
 footer {
   background-color: #F8F9FA;
   color: #000;
@@ -207,6 +242,28 @@ i:hover {
   #attractions-day-filter Button, #my-trip-date Button{
     margin-top: 1rem;
     margin-left: 0;
+  }
+
+  #itinerary-container{
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  .itinerary-current{
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .itinerary-card {
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+  .itinerary-card h6{
+    width: 100%;
+  }
+  .itinerary-card input{
+    font-size: 0.8rem;
+    width: 40%;
   }
 
   .profile-update-form{

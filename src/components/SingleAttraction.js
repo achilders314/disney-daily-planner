@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext';
+import { useAttractions } from '../contexts/AttractionContext';
 
 function SingleAttraction(props){
-
-    const attraction = props.attraction;
+    const { attractions, attractionsLoading } = useAttractions();
+    const attractionName = props.attractionName;
+    const isChecked = props.isChecked;
+    const attraction = attractions.filter((attraction) => attraction.name === attractionName)[0];
     const {loading} = useAuth();
     let timestamp = new Date(attraction.data.lastUpdated);
     // let day = timestamp.getDay();
@@ -37,14 +40,14 @@ function SingleAttraction(props){
     }, [loading])
 
     return(
-        loading ? "" :
-        <div key={attraction.name} className="attractionCards" style={{backgroundColor: attraction.isChecked ? "#c1d0e8" : "#fff"}}>
+        loading || attractionsLoading ? "" :
+        <div key={attraction.name} className="attractionCards" style={{backgroundColor: isChecked ? "#c1d0e8" : "#fff"}}>
                         <div className="attraction-header">
                             <h5>{attraction.name}</h5>
                             <div className="form-check form-check-inline">
                                 {props.loggedIn ?
                                 <input className="form-check-input"
-                                    checked={attraction.isChecked}
+                                    checked={isChecked}
                                     type="checkbox" id={`inline-checkbox-${attraction.name}`}
                                     value={`${attraction.name}`}
                                     onChange={activeStateChange} /> :

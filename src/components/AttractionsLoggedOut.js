@@ -18,7 +18,7 @@ export default function AttractionsLoggedOut(props) {
                 {attractions.filter(attraction => attraction.data.parkId === park.parkId).map((attraction => {
                                         
                     return(
-                        <SingleAttraction loggedIn={false} key={attraction.name} attraction={attraction}/>
+                        <SingleAttraction loggedIn={false} key={attraction.name} attractionName={attraction.name} isChecked={false}/>
                     )
                 }))}
                 </div>

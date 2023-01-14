@@ -41,7 +41,7 @@ export default function AttractionsLoggedIn(props){
         // try{
         let selectedAttractionsCopy = selectedAttractions;
         selectedAttractionsCopy = selectedAttractionsCopy.map((attraction) => {
-            return {...attraction, isChecked: false, startTime: "", endTime: ""}
+            return {name: attraction.name, startTime: "", endTime: ""}
         });
         if(selectedAttractionsCopy.length === 0){
             return setError("Please select at least one attraction to add.")
@@ -81,11 +81,10 @@ export default function AttractionsLoggedIn(props){
     }
 
     function loadUserAttractions(parkDayFilter){
-        console.log("loading!")
         const currentAttractions = parkDayFilter[0].attractions ? 
                                    parkDayFilter[0].attractions.map((current) => current.name) : 
                                    [];
-        const modifiedAttractions = attractions.map((attraction) => {return {...attraction, isChecked: false, startTime: "", endTime: ""}})
+        const modifiedAttractions = attractions.map((attraction) => {return {name: attraction.name, isChecked: false, startTime: "", endTime: "", parkId: attraction.data.parkId}})
                                                 .filter((attraction) => {
                                                 return !currentAttractions.includes(attraction.name);
                                                 })
@@ -101,7 +100,6 @@ export default function AttractionsLoggedIn(props){
         }
 
         setUpAttractions();
-        
     }, [userData, dateSelector, attractionsLoading, attractions])
 
   return (
@@ -145,10 +143,14 @@ export default function AttractionsLoggedIn(props){
                                 <div className="attractions">
                                 <h2>Attractions</h2>
                                 {modAttractions.filter(attraction => {
-                                   return attraction.data.parkId === park.parkId
+                                   return attraction.parkId === park.parkId
                                 }).map((attraction => {
                                     return(
-                                        <SingleAttraction loggedIn={true} onChange={changeCheckedStatus} key={attraction.name} attraction={attraction}/>
+                                        <SingleAttraction loggedIn={true} 
+                                                            onChange={changeCheckedStatus} 
+                                                            key={attraction.name} 
+                                                            attractionName={attraction.name} 
+                                                            isChecked={attraction.isChecked}/>
                                     )
                                 }))}
                                 </div>
