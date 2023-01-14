@@ -14,7 +14,7 @@ export default function ProfileDetails() {
                 attractions you'd like to visit and create a customized schedule for your 
                 Walt Disney World trip! Keep visiting this page regularly as updates come out.
         </p>
-        <p>
+        <p className="overflow-auto">
             Email: {userData.email}
         </p>  
         <p>

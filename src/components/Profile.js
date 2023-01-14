@@ -26,7 +26,7 @@ export default function Profile() {
                                             "My Profile":
                                             `Profile: ${userData.firstName}`}</h2>
             <div className="bg-white rounded p-4 w-75">
-                <div className="d-flex flex-column align-items-end">
+                <div className="d-flex flex-column align-items-end mb-3">
                     {updateMode ? 
                     <Button type="button" variant="danger" onClick={() => {
                         setUpdateMode(!updateMode)

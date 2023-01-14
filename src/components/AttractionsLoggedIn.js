@@ -111,7 +111,7 @@ export default function AttractionsLoggedIn(props){
                 <Form>
                     <Form.Group>
                         <Form.Label className="text-white">Trip Day:</Form.Label>
-                        <Form.Control id="trip-date-selector" as="select" type="select" 
+                        <Form.Select id="trip-date-selector" as="select" type="select" 
                                     defaultValue={userData.trip.length > 0 ? userData.trip[0].parkDays[0].tripDate : ""} 
                                     onChange={changeTripDay}
                                     ref={dateSelector}
@@ -119,7 +119,7 @@ export default function AttractionsLoggedIn(props){
                                 {userData.trip[0].parkDays.map((day) => {
                                     return <option key={day.tripDate} value={day.tripDate}>{day.tripDate} ({day.park})</option>
                                 })}
-                        </Form.Control>
+                        </Form.Select>
                     </Form.Group>
                 </Form>
                 <Button onClick={addToTrip}>Add {selectedAttractions.length} to Trip</Button>

@@ -95,7 +95,7 @@ export default function MyTrip() {
                     <Form >
                         <Form.Group>
                             <Form.Label>Itinerary For:</Form.Label>
-                            <Form.Control id="itinerary-date-selector" as="select" type="select" 
+                            <Form.Select id="itinerary-date-selector" as="select" type="select" 
                                         defaultValue={userData.trip[0].parkDays[0].tripDate} 
                                         ref={dateSelector}
                                         onChange={changeTripDay}
@@ -103,7 +103,7 @@ export default function MyTrip() {
                                     {userData.trip[0].parkDays.map((day) => {
                                         return <option key={day.tripDate} value={day.tripDate}>{day.tripDate} ({day.park})</option>
                                     })}
-                            </Form.Control>
+                            </Form.Select>
                         </Form.Group>
                     </Form>
                     <Button>Update Itinerary</Button>

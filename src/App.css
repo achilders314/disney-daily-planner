@@ -63,6 +63,7 @@ i:hover {
 }
 
 .park{
+  width: 95%;
   color: #fff;
   padding: 1% 2%;
 }
@@ -183,9 +184,13 @@ i:hover {
 
 @media screen and (max-width: 710px) {
   
-  main > div {
-    margin-top: 4rem;
-    margin-bottom: 4rem;
+  main {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .park{
+    width: 90%;
   }
 
   .attractionCards {

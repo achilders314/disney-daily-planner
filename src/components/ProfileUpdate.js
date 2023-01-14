@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react'
+import React, {useRef, useState, useEffect} from 'react'
 import { Form, Button, Alert } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext';
 
@@ -8,12 +8,15 @@ export default function ProfileUpdate() {
     const [success, setSuccess] = useState('');
     const [loading, setLoading] = useState(false);
     const { userData, updateUserDetails, currentUser } = useAuth();
-    const nameRef = useRef();
-    const tripStartRef = useRef();
-    const tripEndRef = useRef();
     const today = new Date();
     let tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
+    const nameRef = useRef();
+    const tripStartRef = useRef(Object.keys(userData).length ?
+                        new Date(userData.trip[0].tripStart) : today);
+    const tripEndRef = useRef(Object.keys(userData).length ?
+                        new Date(userData.trip[0].tripEnd) : tomorrow);
+
     
 
     async function handleSubmit(e){
@@ -99,10 +102,12 @@ export default function ProfileUpdate() {
         // }
 
     }
+
+
   return (
     <Form className="profile-update-form">
         <p className="text-danger">Warning: changing your trip dates will erase any saved itineraries you may have created.</p>
-        <p>Email: {userData.email}</p>
+        <p className="overflow-auto">Email: {userData.email}</p>
         {error && <Alert variant="danger">{error}</Alert>}
         {success && <Alert variant="success">{success}</Alert>}
         <Form.Group className="my-2" id="first-name">
@@ -111,15 +116,21 @@ export default function ProfileUpdate() {
         </Form.Group>
         <Form.Group className="my-2" id="trip-start">
             <Form.Label>Trip Start: </Form.Label>
-            <Form.Control as="input" className="" type="date" ref={tripStartRef} 
-                          defaultValue={userData && userData.trip.length > 0 ?
-                            new Date(userData.trip[0].tripStart) : today} required />
+            <input id="trip-start-value" 
+                   className="form-control date"  
+                   type="date" ref={tripStartRef} 
+                   defaultValue={Object.keys(userData).length ?
+                          new Date(userData.trip[0].tripStart).toISOString().split('T')[0] : today}
+                          required />
         </Form.Group>
         <Form.Group className="my-2" id="trip-end">
             <Form.Label>Trip End: </Form.Label>
-            <Form.Control as="input" className="" type="date" ref={tripEndRef} 
-                          defaultValue={userData.trip.length > 0 ?
-                            new Date(userData.trip[0].tripEnd) : tomorrow} required />
+            <input id="trip-end-value" 
+                   className="form-control date" 
+                   type="date" ref={tripEndRef} 
+                   defaultValue={Object.keys(userData).length ?
+                          new Date(userData.trip[0].tripEnd).toISOString().split('T')[0] : tomorrow}
+                          required />
         </Form.Group>
         <h4>Park Selection:</h4>
         <p>Please choose the parks you will visit each day. If you have no park that day, just select "none."</p>
@@ -128,14 +139,14 @@ export default function ProfileUpdate() {
                 return(
                 <Form.Group className="my-2" key={`${day.tripDate}-group`}>
                     <Form.Label key={`${day.tripDate}-label`}>Day {index+1}: {day.tripDate}</Form.Label>
-                    <Form.Control key={day.tripDate} id={day.tripDate} as="select" className="" type="select" 
+                    <Form.Select key={day.tripDate} id={day.tripDate} as="select" className="" type="select" 
                                 defaultValue={day.park} required>
                             <option value={"None"}>None</option>
                             <option value={"Magic Kingdom Park"}>Magic Kingdom</option>
                             <option value={"EPCOT"}>EPCOT</option>
                             <option value={"Disney's Hollywood Studios"}>Hollywood Studios</option>
                             <option value={"Disney's Animal Kingdom Theme Park"}>Animal Kingdom</option>
-                    </Form.Control>
+                    </Form.Select>
                 </Form.Group>
                 )
             }) : ""}
