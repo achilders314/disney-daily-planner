@@ -11,13 +11,13 @@ export default function Attractions(){
 
     // array of objects, containing each day's park, date, & attractions
 
-    useEffect(() => {
-
-    }, [userData])
+    //Detects loading state of user data & attractions
+    //Then, detects whether user data & trip array exists.
+    //If both exist, returns a page with attractions by trip date, and excludes ones they've already checked.
 
     return(
         <main>            
-                {loading || attractionsLoading || !userData ? 
+                {loading || attractionsLoading ? 
                 <div className="d-flex h-50 justify-content-center align-items-center">
                     <img src={loadingIcon} alt="loading spinner" style={{backgroundColor: "white", width: "60px", borderRadius: "50%"}} />
                 </div> :

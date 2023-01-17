@@ -15,7 +15,10 @@ export default function AttractionsLoggedIn(props){
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
     let dateSelector = useRef();
-    
+
+
+    //Triggered when user changes the dropdown menu of their trip dates. Updates to the park they've
+    //selected for that new date, and updates to which attractions they haven't already selected.
     function changeTripDay(){
         setError('')
         setSuccess('')
@@ -26,6 +29,9 @@ export default function AttractionsLoggedIn(props){
         setSelectedAttractions([])
     }
 
+
+    //Passed down as a prop to the SingleAttraction component, changes the checked status of each attraction and
+    //adds each to the selectedAttractions array. This triggers them to color in blue.
     function changeCheckedStatus(attractionName){
         setError('')
         setSuccess('')
@@ -36,9 +42,10 @@ export default function AttractionsLoggedIn(props){
         setSelectedAttractions(modAttractions.filter((attraction) => attraction.isChecked));     
     }
 
+    //Pushes the selectedAttractions array to the user's data under the correct day.
     async function addToTrip(e){
         e.preventDefault();
-        // try{
+        try{
         let selectedAttractionsCopy = selectedAttractions;
         selectedAttractionsCopy = selectedAttractionsCopy.map((attraction) => {
             return {name: attraction.name, startTime: "", endTime: ""}
@@ -60,18 +67,20 @@ export default function AttractionsLoggedIn(props){
             await lookupUserDetails();
             return setSuccess("Attractions updated successfully for this date. They should now appear on your \"My Trip\" page.")
         }
-    // } catch(err){
-    //     setSuccess('');
-    //     console.log(err.message);
-    //     return setError("An error has occurred, please try again.");
-    // }
+    } catch(err){
+        setSuccess('');
+        console.log(err.message);
+        return setError("An error has occurred, please try again.");
+    }
     }
 
+    //Sets up the initial selected park to the first day of the user's trip. Returns the entire first day object
+    //for their trip which gets used in the "loadUserAttractions" function on initial render.
     function initialSelectedPark(){
         if(Object.keys(userData).length > 0 && userData.trip[0].parkDays){
         if(dateSelector.current.value){
             /*  filters out all of the park day entries to only the one selected in the drop-down - should be an array
-            with length 1.  */
+            with length 1. */
             let parkDayFilter = userData.trip[0].parkDays.filter((day) => day.tripDate === dateSelector.current.value);
             setSelectedPark(parkDayFilter[0].park === "None" ? "" : parkDayFilter[0].park);
             return parkDayFilter;
@@ -80,6 +89,9 @@ export default function AttractionsLoggedIn(props){
         return null;
     }
 
+
+    //Takes in filtered park day object from initialSelectedPark function, determines which ones the user
+    //already chose for that day, and sets them to the modAttractions variable.
     function loadUserAttractions(parkDayFilter){
         const currentAttractions = parkDayFilter[0].attractions ? 
                                    parkDayFilter[0].attractions.map((current) => current.name) : 

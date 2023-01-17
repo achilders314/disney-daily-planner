@@ -10,6 +10,8 @@ export default function ForgotPassword(){
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
 
+
+    //checks that user is submitting a valid email, and then sends the reset password email to the user through Firebase.
     async function handleSubmit(e){
         e.preventDefault();
         let regexForEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;

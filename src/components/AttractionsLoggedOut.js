@@ -1,15 +1,17 @@
 import React from 'react'
 import SingleAttraction from './SingleAttraction';
+import { useAttractions } from '../contexts/AttractionContext';
 
-export default function AttractionsLoggedOut(props) {
-    let parks = props.parks;
-    let attractions = props.attractions;
+export default function AttractionsLoggedOut() {
+    const {parks, attractions, attractionsLoading} = useAttractions();
 
-
+    // Returns attractions stats sorted by park, but no checkboxes. Adds a message to users to go to their 
+    // profile page to set up a trip.
     return(
         <>
         <p className="text-center text-white">Want to start adding attractions to your itinerary? Go to your profile and set up your trip dates and parks!</p>
-        {parks.map((park) => {
+        {attractionsLoading ? "" :
+        parks.map((park) => {
             return(
             <div key={park.parkId} className="park">
                 <h1 key={`${park.data.name}`}>Name: {park.data.name}</h1>

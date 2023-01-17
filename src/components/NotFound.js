@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import mickeyImage from '../assets/mickey-placeholder.jpg'
 
-
+//TODOTODOTODO double check responsiveness.
 export default function NotFound() {
   return (
     <div id="not-found-message"

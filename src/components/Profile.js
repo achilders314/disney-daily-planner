@@ -14,6 +14,7 @@ export default function Profile() {
 
     }, [userData])
 
+    // Displays either user's details (ProfileDetails component) or the form to change their details if user clicks the button.
     return (
         <main className="d-flex justify-content-center align-items-center flex-column"
         style={{ minHeight: "80vh"}}>

@@ -11,6 +11,9 @@ function SingleAttraction(props){
     let timestamp = new Date(attraction.data.lastUpdated);
     // let day = timestamp.getDay();
     let today = new Date();
+
+    //TODOTODOTODO refactor this to be more D.R.Y.
+    //Calculates average wait time for each attraction over the last 14 days.
     let waitTimes8 = Math.round(attraction.data.waitTimeAvg[8].reduce((a,b) => {return a+b}) / attraction.data.waitTimeAvg[8].length);
     let waitTimes9 = Math.round(attraction.data.waitTimeAvg[9].reduce((a,b) => {return a+b}) / attraction.data.waitTimeAvg[9].length);
     let waitTimes10 = Math.round(attraction.data.waitTimeAvg[10].reduce((a,b) => {return a+b}) / attraction.data.waitTimeAvg[10].length);
@@ -31,6 +34,8 @@ function SingleAttraction(props){
         timestamp = timestamp.toLocaleString();
     }
 
+    //Takes prop onChange function from the AttractionsLoggedIn component to update checked status.
+    //Checks in blue and pushes to the "selectedAttractions" array in the parent component.
     const activeStateChange = (e) => {
         props.onChange(e.target.value.toString());
     }

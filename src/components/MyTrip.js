@@ -40,6 +40,19 @@ export default function MyTrip() {
     return null;
 }
 
+function loadUserAttractions(parkDayFilter){
+  const scheduledAttractions = parkDayFilter[0].attractions ? 
+                            parkDayFilter[0].attractions.filter((attraction) => attraction.startTime !== "") : 
+                            [];
+  const unscheduledAttractions = parkDayFilter[0].attractions ? 
+                      parkDayFilter[0].attractions.filter((attraction) => attraction.startTime === "") : 
+                      [];
+  setScheduled(scheduledAttractions);
+  setUnscheduled(unscheduledAttractions);
+}
+
+  // When user clicks the trashcan under each attraction in their "My Trip" page, deletes that attraction
+  // from that day of their Firebase data. Should immediately update the UI.
   async function deleteAttraction(attractionName){
     let parkDayFilter = await initialSelectedPark();
     let currentAttractions = parkDayFilter[0].attractions;
@@ -56,16 +69,6 @@ export default function MyTrip() {
   
   useEffect(() => {
 
-    function loadUserAttractions(parkDayFilter){
-        const scheduledAttractions = parkDayFilter[0].attractions ? 
-                                  parkDayFilter[0].attractions.filter((attraction) => attraction.startTime !== "") : 
-                                  [];
-        const unscheduledAttractions = parkDayFilter[0].attractions ? 
-                            parkDayFilter[0].attractions.filter((attraction) => attraction.startTime === "") : 
-                            [];
-        setScheduled(scheduledAttractions);
-        setUnscheduled(unscheduledAttractions);
-    }
 
     let initialPark = initialSelectedPark();
     if(initialPark !== null){
@@ -74,6 +77,7 @@ export default function MyTrip() {
     
   }, [userData, dateSelector])
 
+  // If startTime and EndTime
   return (
     
     <main className="d-flex justify-content-center align-items-center flex-column"
@@ -127,8 +131,8 @@ export default function MyTrip() {
                   <div className="itinerary-current">
                     <h4>Currently Scheduled:</h4>
                     
-                      {scheduled === [] ?
-                      <p>No events scheduled yet</p> :
+                      {scheduled.length === 0 ?
+                      <p><em>No events scheduled yet. Visit the "Attractions" page to add some & then come back here to set up your schedule!</em></p> :
                       <>
                         {scheduled.map((attraction) => {
                         return (
@@ -147,8 +151,8 @@ export default function MyTrip() {
                   </div>
                   <div className="itinerary-current">
                     <h4>Unscheduled Items:</h4>
-                      {unscheduled === [] ?
-                      <p>No events added yet.</p> :
+                      {unscheduled.length === 0 ?
+                      <p><em>No events added yet. Visit the "Attractions" page to add some.</em></p> :
                       <div className="d-flex itinerary-cards-flex">  
                         {unscheduled.map((attraction) => {
                           return(

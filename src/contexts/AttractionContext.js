@@ -17,6 +17,9 @@ export function AttractionProvider({ children }) {
     const [attractions, setAttractions] = useState([]);
     const [attractionsLoading, setAttractionsLoading] = useState(true);
 
+    //On app load, gets the parks from the Firebase database. 
+    //Then, gets attractions, wait times etc.
+    //Sets attractionsLoading to false once finished.
     useEffect(() => {
         async function getParks(){
             setAttractionsLoading(true);
@@ -43,6 +46,7 @@ export function AttractionProvider({ children }) {
                 console.log("No data")
             }
             }).catch((err) => {console.log(err)})
+
             await get(attractionCollectionRef).then((snap) => {
             if(snap.exists()){
                 attractionData = snap.val();

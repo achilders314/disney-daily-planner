@@ -21,7 +21,8 @@ function Nav(){
     useEffect(() => {
 
     }, [userData])
-
+    //if user is logged in, displays name in upper right and gives them "Profile" and "Sign out options"
+    //If not, displays "Sign up or Log in" and gives those two options.
     return(
         <>
         <nav className="navbar navbar-expand-lg bg-light navbar-light sticky-top px-4">

@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from 'react'
+import React, {useRef, useState} from 'react'
 import { Form, Button, Alert } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext';
 
@@ -18,7 +18,8 @@ export default function ProfileUpdate() {
                         new Date(userData.trip[0].tripEnd) : tomorrow);
 
     
-
+    //validates the form, then if the user's dates haven't change, updates the parks chosen.
+    //if the user's dates have changed, sets up a new trip and calculates which dates the user will be there.
     async function handleSubmit(e){
         e.preventDefault();
         // try{
@@ -30,7 +31,7 @@ export default function ProfileUpdate() {
             let tripEnd = tripEndRef.current.value === "" ? "" : new Date(tripEndRef.current.value);
             tripStart.setTime(tripStart.getTime() + timeZoneOffset);
             tripEnd.setTime(tripEnd.getTime() + timeZoneOffset);
-            if(nameRef.current.value === ' '){
+            if(nameRef.current.value === ''){
                 return setError("Please enter a name.")
             }
             if(tripStart === ""){

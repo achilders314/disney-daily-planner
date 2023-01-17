@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './App.css';
-// import { collection, getDocs, addDoc, deleteDoc, doc, query, where } from 'firebase/firestore'
 import { Routes, Route } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 import Nav from './components/Nav'
@@ -18,10 +17,6 @@ import { AuthProvider } from './contexts/AuthContext';
 import { AttractionProvider } from './contexts/AttractionContext';
 
 function App() {
-
-  useEffect(() => {
-
-  }, [])
 
 
 
