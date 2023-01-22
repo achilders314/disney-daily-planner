@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { ref, get, child, getDatabase } from 'firebase/database';
 import { app } from '../firebase-config';
 
-const AttractionContext = React.createContext();
+export const AttractionContext = React.createContext();
 
 export function useAttractions() {
     return useContext(AttractionContext);

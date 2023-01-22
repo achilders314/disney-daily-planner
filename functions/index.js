@@ -5,26 +5,26 @@ const request = require("request");
 
 admin.initializeApp(functions.config().firebase);
 
-// const usersRef = admin.firestore().collection("users");
+// exports.helloWorld = functions.https.onRequest((request, response) => {
+//   functions.logger.info("Hello logs!", {structuredData: true});
+//   response.send("Hello from Firebase!");
+// });
 
-exports.helloWorld = functions.https.onRequest((request, response) => {
-  functions.logger.info("Hello logs!", {structuredData: true});
-  response.send("Hello from Firebase!");
-});
+
+/* Cloud function that collects park data every hour to gather
+wait times that will display on the "Attractions" page*/
 
 exports.collectParkData = functions.pubsub
     .schedule("0 8,9,10,11,12,13,14,15,16,17,18,19 * * *")
     .timeZone("America/New_York").onRun(async () => {
       const timestamp = new Date();
       const fetchUrl = "https://api.themeparks.wiki/v1/entity/waltdisneyworldresort/live";
-      //   const promiseArr = [];
-      //   let timestamp = new Date();
+
       request(fetchUrl, function(error, response, data) {
         console.error("error:", error); // Print the error if one occurred
         console.log("statusCode:", response && response.statusCode);
-        // console.log("body:", data);
         data = JSON.parse(data);
-        // console.log(data)
+
         let disneyWorldLiveData = data.liveData;
         const disneyWorldParks = [
           "75ea578a-adc8-4116-a54d-dccb60765ef9",
@@ -33,7 +33,6 @@ exports.collectParkData = functions.pubsub
           "47f90d2c-e191-4239-a466-5892ef59a88b"];
           // eslint-disable-next-line max-len
         disneyWorldLiveData = disneyWorldLiveData.filter((attraction) => (disneyWorldParks.indexOf(attraction.parkId) !== -1));
-        // console.log(disneyWorldLiveData);
         for (let j=0; j<disneyWorldLiveData.length; j++) {
           const attraction = disneyWorldLiveData[j];
           let attractionName = attraction.name;
@@ -52,9 +51,10 @@ exports.collectParkData = functions.pubsub
             }
             console.log(currentEntryData);
             // eslint-disable-next-line max-len
-            const currentWaitTime = attraction.queue && attraction.queue["STANDBY"] && attraction.queue["STANDBY"].waitTime ? attraction.queue["STANDBY"].waitTime : 0;
+            const currentWaitTime = attraction.queue && attraction.queue["STANDBY"] && attraction.queue["STANDBY"].waitTime ?
+                                    attraction.queue["STANDBY"].waitTime : 0;
             // eslint-disable-next-line max-len
-            if (currentEntryData === false) {
+            if (!currentEntryData) {
               attractionUpdate = {
                 name: attractionName,
                 parkId: attraction.parkId,

@@ -12,7 +12,7 @@ import { auth, googleProvider, rtdb, app } from '../firebase-config';
 import { ref, set, get, update, child, getDatabase } from 'firebase/database';
 import { useNavigate } from 'react-router-dom';
 
-const AuthContext = React.createContext();
+export const AuthContext = React.createContext();
 
 export function useAuth() {
     return useContext(AuthContext);
