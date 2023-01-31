@@ -24,6 +24,7 @@ export default function AttractionsLoggedIn(props){
         setSuccess('')
         if(dateSelector.current.value){
             let parkDayFilter = userData.trip[0].parkDays.filter((day) => day.tripDate === dateSelector.current.value);
+            loadUserAttractions(parkDayFilter);
             setSelectedPark(parkDayFilter[0].park === "None" ? "None" : parkDayFilter[0].park);
         }
         setSelectedAttractions([])
@@ -58,7 +59,11 @@ export default function AttractionsLoggedIn(props){
             let tripDayIndex = userData.trip[0].parkDays.findIndex((day) => day === parkDayFilter[0]);
             let attractionsCopy = parkDayFilter[0].attractions;
             let result = !attractionsCopy ? selectedAttractionsCopy : [...new Set([...attractionsCopy, ...selectedAttractionsCopy])]
-            userData.trip[0].parkDays[tripDayIndex].attractions = result;
+            userData.trip[0].parkDays[tripDayIndex].attractions = result.sort((a,b) => {
+                if(a.name.toLowerCase() > b.name.toLowerCase()) {return 1}
+                else if (a.name.toLowerCase() < b.name.toLowerCase()) {return -1}
+                else {return 0}
+            });
             let tripCopy = userData.trip;
             let update = {};
             update[`users/${currentUser.uid}/trip`] = tripCopy
@@ -96,10 +101,11 @@ export default function AttractionsLoggedIn(props){
         const currentAttractions = parkDayFilter[0].attractions ? 
                                    parkDayFilter[0].attractions.map((current) => current.name) : 
                                    [];
-        const modifiedAttractions = attractions.map((attraction) => {return {name: attraction.name, isChecked: false, startTime: "", endTime: "", parkId: attraction.data.parkId}})
-                                                .filter((attraction) => {
-                                                return !currentAttractions.includes(attraction.name);
+        const modifiedAttractions = attractions.filter((attraction) => {
+                                                    return !currentAttractions.includes(attraction.name);
                                                 })
+                                                .map((attraction) => {return {name: attraction.name, isChecked: false, startTime: "", endTime: "", parkId: attraction.data.parkId}})
+                                                
         return setModAttractions(modifiedAttractions);
     }
 
@@ -151,7 +157,7 @@ export default function AttractionsLoggedIn(props){
                             <div key={park.parkId} className="park">
                                 {success && <Alert variant="success">{success}</Alert>}
                                 {error && <Alert variant="danger">{error}</Alert>}
-                                <h1 key={`${park.data.name}`}>Name: {park.data.name}</h1>
+                                <h1 key={`${park.data.name}`}>Park: {park.data.name}</h1>
                                 <div className="attractions">
                                 <h2>Attractions</h2>
                                 {modAttractions.filter(attraction => {
