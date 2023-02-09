@@ -2,14 +2,18 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Form, Button } from 'react-bootstrap';
-import loadingIcon from '../assets/loadingIcon.gif'
+import loadingIcon from '../assets/loadingIcon.gif';
+import { useAttractions } from '../contexts/AttractionContext';
+import AttractionPopUp from './AttractionPopUp';
 
 export default function MyTrip() {
   const { currentUser, userData, loading, updateUserDetails, lookupUserDetails } = useAuth();
+  const { attractionsLoading } = useAttractions();
   const [scheduled, setScheduled] = useState([]);
   const [unscheduled, setUnscheduled] = useState([]);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [attractionPopup, setAttractionPopup] = useState("Peter Pan's Flight");
   let dateSelector = useRef();
 
   function changeTripDay(){
@@ -42,7 +46,12 @@ export default function MyTrip() {
 
 function loadUserAttractions(parkDayFilter){
   const scheduledAttractions = parkDayFilter[0].attractions ? 
-                            parkDayFilter[0].attractions.filter((attraction) => attraction.startTime !== "") : 
+                            parkDayFilter[0].attractions.filter((attraction) => attraction.startTime !== "")
+                                                        .sort((a, b) => {
+                                                          if(a.startTime > b.startTime){return 1}
+                                                          else if(a.startTime < b.startTime){return -1}
+                                                          else{return 0}
+                                                        }) : 
                             [];
   const unscheduledAttractions = parkDayFilter[0].attractions ? 
                       parkDayFilter[0].attractions.filter((attraction) => attraction.startTime === "") : 
@@ -64,7 +73,38 @@ function loadUserAttractions(parkDayFilter){
     update[`users/${currentUser.uid}/trip/0/parkDays/${tripDayIndex}/attractions`] = currentAttractions;
     await updateUserDetails(update);
     await lookupUserDetails();
+  }
 
+  async function scheduleAttraction(attractionName){
+    let parkDayFilter = await initialSelectedPark();
+    let currentAttractions = parkDayFilter[0].attractions;
+    let tripDayIndex = userData.trip[0].parkDays.findIndex((day) => day.tripDate === parkDayFilter[0].tripDate);
+    const attractionsCopy = currentAttractions.map((attraction) => attraction.name);
+    const attractionIndex = attractionsCopy.indexOf(attractionName);
+    const selectedTime = document.getElementById(`${attractionName}-time`);
+    currentAttractions[attractionIndex].startTime = selectedTime.value;
+    let update = {}
+    update[`users/${currentUser.uid}/trip/0/parkDays/${tripDayIndex}/attractions`] = currentAttractions;
+    await updateUserDetails(update);
+    await lookupUserDetails();
+  }
+
+  async function unscheduleAttraction(attractionName){
+    let parkDayFilter = await initialSelectedPark();
+    let currentAttractions = parkDayFilter[0].attractions;
+    let tripDayIndex = userData.trip[0].parkDays.findIndex((day) => day.tripDate === parkDayFilter[0].tripDate);
+    const attractionsCopy = currentAttractions.map((attraction) => attraction.name);
+    const attractionIndex = attractionsCopy.indexOf(attractionName);
+    const selectedTime = document.getElementById(`${attractionName}-time`);
+    currentAttractions[attractionIndex].startTime = "";
+    let update = {}
+    update[`users/${currentUser.uid}/trip/0/parkDays/${tripDayIndex}/attractions`] = currentAttractions;
+    await updateUserDetails(update);
+    await lookupUserDetails();
+  }
+
+  function displayDetails(attractionName){
+    setAttractionPopup(attractionName);
   }
   
   useEffect(() => {
@@ -75,14 +115,13 @@ function loadUserAttractions(parkDayFilter){
         loadUserAttractions(initialPark);
     }
     
-  }, [userData, dateSelector])
+  }, [userData, dateSelector, attractionsLoading])
 
   // If startTime and EndTime
   return (
-    
     <main className="d-flex justify-content-center align-items-center flex-column"
           style={{ minHeight: "80vh"}}>
-        {loading || !userData ?
+        {loading || attractionsLoading || !userData ?
         <div className="d-flex h-50 justify-content-center align-items-center">
           <img src={loadingIcon} alt="loading spinner" style={{backgroundColor: "white", width: "60px", borderRadius: "50%"}} />
         </div> :
@@ -100,7 +139,7 @@ function loadUserAttractions(parkDayFilter){
               Name: {userData.firstName}
             </p>      
             <div>
-              Trip Dates: {(userData && userData.trip && userData.trip[0] && userData.trip[0].tripStart === "") ? 
+              Trip Dates: {(userData?.trip?.[0]?.tripStart === "") ? 
               <span className='text-muted fst-italic'>No trips yet, please visit <Link to="/profile">your profile</Link> to add one.</span> : 
               <span>{userData.trip[0].tripStart} - {userData.trip[0].tripEnd}</span>}          
             </div>
@@ -127,7 +166,7 @@ function loadUserAttractions(parkDayFilter){
                     </Form>
                     <Button>Update Itinerary</Button>
                 </div>}
-                <section className="d-flex" id="itinerary-container">
+                <section className="d-flex flex-row" id="itinerary-container">
                   <div className="itinerary-current">
                     <h4>Currently Scheduled:</h4>
                     
@@ -137,10 +176,11 @@ function loadUserAttractions(parkDayFilter){
                         {scheduled.map((attraction) => {
                         return (
                           <div key={attraction.name} className="itinerary-card d-flex">
-                            <h6 className="w-100">{attraction.name}</h6>
-                            <input type="time" defaultValue={attraction.startTime} />
-                            {" - "}
-                            <input type="time" defaultValue={attraction.endTime} />
+                            <div className="d-flex justify-content-end w-100">
+                                  <i className="fa-solid fa-circle-question" onClick={() => displayDetails(attraction.name)} data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
+                            </div>
+                            <h6 className="w-100">{attraction.startTime} - {attraction.name}</h6>
+                            <Button type="button" className="btn btn-danger btn-sm" onClick={() => unscheduleAttraction(attraction.name)}>Unschedule</Button>
                             <i className="fa-solid fa-trash" onClick={()=>deleteAttraction(attraction.name)}></i>
                           </div>
                         )
@@ -156,11 +196,13 @@ function loadUserAttractions(parkDayFilter){
                       <div className="d-flex itinerary-cards-flex">  
                         {unscheduled.map((attraction) => {
                           return(
-                            <div key={attraction.name} className="itinerary-card d-flex">
+                            <div key={attraction.name} className="itinerary-card d-flex p-2">
+                              <div className="d-flex justify-content-end w-100">
+                                <i className="fa-solid fa-circle-question" onClick={() => displayDetails(attraction.name)} data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
+                              </div>
                               <h6 className="w-100">{attraction.name}</h6>
-                              <input type="time" className="form-control time" defaultValue={new Date().getTime()} />
-                              {" - "}
-                              <input type="time" className="form-control time" defaultValue={attraction.endTime} />
+                              <input type="time" className="form-control time" id={`${attraction.name}-time`} defaultValue={new Date().getTime()} />
+                              <Button type="button" className="btn btn-primary" onClick={() => scheduleAttraction(attraction.name)}>Schedule</Button>
                               <i className="fa-solid fa-trash mx-1" onClick={()=>deleteAttraction(attraction.name)}></i>
                             </div>
                           )
@@ -172,10 +214,23 @@ function loadUserAttractions(parkDayFilter){
                   </section>
             </div>
           
-            
+          </div>
+            <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-centered">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalLabel">Attraction Details</h5>
+                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div className="modal-body">
+                    <AttractionPopUp style={{width: "100% !important"}} key={attractionPopup} attractionName={attractionPopup}/>
+                </div>
+              </div>
+            </div>
           </div>
         </>
         }
+
     </main>
   )
 }

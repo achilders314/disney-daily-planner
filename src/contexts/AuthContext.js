@@ -19,11 +19,11 @@ export function useAuth() {
 }
 
 
-export function AuthProvider({ children }) {
+export function AuthProvider({ children, onSuccess }) {
     const [currentUser, setCurrentUser] = useState();
     const [userData, setUserData] = useState('');
     const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     function signup(email, password) {
         return createUserWithEmailAndPassword(auth, email, password);
@@ -51,7 +51,9 @@ export function AuthProvider({ children }) {
                             lastLogin: new Date(),
                         })
                     }
-                    navigate("/");
+                    if(onSuccess){
+                        onSuccess();                        
+                    }
                 })
             }).catch((err) => { return err.message });
     }
@@ -77,7 +79,9 @@ export function AuthProvider({ children }) {
                             lastLogin: new Date(),
                         })
                     }
-                    navigate("/");
+                    if(onSuccess){
+                        onSuccess();                        
+                    }
                 })
             }).catch((err) => {
                 return err.message;
