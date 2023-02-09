@@ -9,15 +9,16 @@ export default function Home() {
         <div className="bg-white rounded p-4 w-75">
             <p>This page is still under construction. Currently users are able to:</p>
             <ul>
-                <li>View the Home, Contact, and <Link to="/attractions">Attractions</Link> pages.</li>
+                <li>View the Home, Contact, <Link to="/attractions">Attractions</Link>, and <Link to="/my-trip">My Trip</Link> pages.</li>
                 <li>Sign up or log in using either email or Google authentication through Firebase.</li>
                 <li>View their <Link to="my-trip">My Trip</Link> page.</li>
                 <li>View their <Link to="profile">Profile</Link> page and edit their name, trip dates & parks.</li>
+                <li>Add attractions to each day of their trip</li>
+                <li>Create a customized schedule of those attractions</li>
             </ul>
             <p>The plan for the near future is to allow users to:</p>
             <ul>
-                <li>Add attractions, restaurants, and shows to each day of your trip</li>
-                <li>Create a customized schedule of those attractions</li>
+                <li>Add restaurants, shows, and custom items to each day of your trip</li>
                 <li>Save for trip day or create a printable PDF itinerary</li>
             </ul>
             <p>Stay tuned! Keep checking back for updates.</p>
