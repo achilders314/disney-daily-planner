@@ -1,9 +1,29 @@
 import React from 'react'
-import { screen, render } from '@testing-library/react';
+import { screen, render, debug } from '@testing-library/react';
 import Attractions from './Attractions';
-import { useAuth, AuthProvider } from '../contexts/AuthContext';
-import { AttractionProvider, useAttractions } from '../contexts/AttractionContext';
+import { useAuth, AuthProvider, AuthContext } from '../contexts/AuthContext';
+import { AttractionProvider, useAttractions, AttractionContext } from '../contexts/AttractionContext';
 import { useNavigate } from 'react-router-dom';
+import testData from '../../testData.json';
+
+import firebase from 'firebase/auth';
+
+jest.mock('../contexts/AttractionContext')
+
+
+
+// jest.mock('firebase/auth', () => {
+//   return {
+//     // auth: jest.fn(() => ({
+//     //     getAuth: jest.fn()
+//     // })),
+//     getAuth: jest.fn(),
+//     GoogleAuthProvider: jest.fn(),
+
+//   };
+// });
+
+jest.mock('firebase/auth');
 
 let userDataNoTrip = {
     firstName: "Alison",
@@ -36,7 +56,7 @@ let userDataTrip = {
 };;
 let noUserData = {};
 
-describe.skip('Attractions Basic Setup', () => {
+describe('Attractions Basic Setup', () => {
     // const { loading } = React.useContext(useAuth);
     // const {attractionsLoading} = React.useContext(useAttractions);
 
@@ -58,16 +78,42 @@ describe.skip('Attractions Basic Setup', () => {
 
     ];
 
+    const value = {
+        userData: userDataTrip
+    }
+
+    const attractionsValue = {
+        attractions: [testData],
+        attractionsLoading: false,
+        parks: []
+    }
+        
+    function Wrapper({children}){
+        return(
+            <AuthContext.Provider value={value}>
+                    <AttractionContext.Provider value={attractionsValue}>
+                        {children}
+                    </AttractionContext.Provider>
+            </AuthContext.Provider>
+        )
+    }
     // Still can't get this one to render correctly
     it('has the word trip', () =>{
-            render(
-                <AuthProvider>
-                    <AttractionProvider>
-                        <Attractions />
-                    </AttractionProvider>
-                </AuthProvider>
+           const { getByText } = render(
+                // <AuthProvider onSuccess={() => jest.fn()}>
+                //     <AttractionProvider>
+                // <AuthContext.Provider value={value}>
+                //     <AttractionContext.Provider value={attractionsValue}>
+                //         <Attractions />
+                //     </AttractionContext.Provider>
+                // </AuthContext.Provider>
+
+                //     </AttractionProvider>
+                // </AuthProvider>
+                    <Attractions />, Wrapper
                 );
-            expect(screen.getByText("trip", {exact: false})).toBeInTheDocument();
+            // screen.debug();
+            expect(getByText("trip")).toBeInTheDocument();
         }
     )
     

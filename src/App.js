@@ -14,15 +14,16 @@ import Attractions from './components/Attractions'
 import Footer from './components/Footer'
 import NotFound from './components/NotFound'
 import { AuthProvider } from './contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import { AttractionProvider } from './contexts/AttractionContext';
 
 function App() {
-
+  const { navigate } = useNavigate();
 
 
   return (
     <div className="App">
-      <AuthProvider>
+      <AuthProvider onSuccess={() => navigate("/")}>
       <AttractionProvider>
       <Nav />
       <Routes>
