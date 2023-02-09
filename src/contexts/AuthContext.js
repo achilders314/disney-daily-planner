@@ -12,18 +12,18 @@ import { auth, googleProvider, rtdb, app } from '../firebase-config';
 import { ref, set, get, update, child, getDatabase } from 'firebase/database';
 import { useNavigate } from 'react-router-dom';
 
-const AuthContext = React.createContext();
+export const AuthContext = React.createContext();
 
 export function useAuth() {
     return useContext(AuthContext);
 }
 
 
-export function AuthProvider({ children }) {
+export function AuthProvider({ children, onSuccess }) {
     const [currentUser, setCurrentUser] = useState();
     const [userData, setUserData] = useState('');
     const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     function signup(email, password) {
         return createUserWithEmailAndPassword(auth, email, password);
@@ -51,7 +51,9 @@ export function AuthProvider({ children }) {
                             lastLogin: new Date(),
                         })
                     }
-                    navigate("/");
+                    if(onSuccess){
+                        onSuccess();                        
+                    }
                 })
             }).catch((err) => { return err.message });
     }
@@ -77,7 +79,9 @@ export function AuthProvider({ children }) {
                             lastLogin: new Date(),
                         })
                     }
-                    navigate("/");
+                    if(onSuccess){
+                        onSuccess();                        
+                    }
                 })
             }).catch((err) => {
                 return err.message;

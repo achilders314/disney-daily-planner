@@ -59,7 +59,11 @@ main > div {
 
 .itinerary-card input{
   font-size: .9rem;
-  width: 30%;
+  width: 35%;
+}
+
+.itinerary-card button{
+  margin-left: 5px;
 }
 
 
@@ -75,6 +79,11 @@ footer {
 i {
   color: #6e506e;
   font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.fa-circle-question{
+  font-size: 1.1rem;
 }
 
 i:hover {
@@ -313,7 +322,7 @@ i:hover {
   }
   .itinerary-card input{
     font-size: 0.8rem;
-    width: 40%;
+    width: 50%;
   }
 
   .profile-update-form{
