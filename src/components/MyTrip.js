@@ -5,6 +5,8 @@ import { Form, Button } from 'react-bootstrap';
 import loadingIcon from '../assets/loadingIcon.gif';
 import { useAttractions } from '../contexts/AttractionContext';
 import AttractionPopUp from './AttractionPopUp';
+import { PrintableSchedule } from './PrintableSchedule';
+import { useReactToPrint } from 'react-to-print';
 
 export default function MyTrip() {
   const { currentUser, userData, loading, updateUserDetails, lookupUserDetails } = useAuth();
@@ -14,7 +16,11 @@ export default function MyTrip() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [attractionPopup, setAttractionPopup] = useState("Peter Pan's Flight");
-  let dateSelector = useRef();
+  const dateSelector = useRef();
+  const printableRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => printableRef.current,
+  });
 
   function changeTripDay(){
       setError('')
@@ -165,11 +171,13 @@ function loadUserAttractions(parkDayFilter){
                         </Form.Group>
                     </Form>
                     <Button>Update Itinerary</Button>
+                    <i className="fa-solid fa-print mx-2" onClick={handlePrint}></i>
                 </div>}
                 <section className="d-flex flex-row" id="itinerary-container">
                   <div className="itinerary-current">
-                    <h4>Currently Scheduled:</h4>
-                    
+                    <div className="d-flex align-items-center">
+                      <h4 className="container-fluid">Currently Scheduled:</h4>
+                    </div>
                       {scheduled.length === 0 ?
                       <p><em>No events scheduled yet. Visit the "Attractions" page to add some & then come back here to set up your schedule!</em></p> :
                       <>
@@ -215,7 +223,7 @@ function loadUserAttractions(parkDayFilter){
             </div>
           
           </div>
-            <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered">
               <div className="modal-content">
                 <div className="modal-header">
@@ -224,6 +232,20 @@ function loadUserAttractions(parkDayFilter){
                 </div>
                 <div className="modal-body">
                     <AttractionPopUp style={{width: "100% !important"}} key={attractionPopup} attractionName={attractionPopup}/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="modal fade" id="printable" tabIndex="-1" aria-labelledby="printableModalLabel" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title container-fluid" id="printableModalLabel">Printable PDF (Preview)</h5>
+                  <i className="fa-solid fa-print" onClick={handlePrint}></i>
+                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div className="modal-body">
+                    <PrintableSchedule ref={printableRef}/>
                 </div>
               </div>
             </div>

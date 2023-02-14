@@ -3,7 +3,9 @@
   padding: 0;
 }
 
-
+.d-none {
+  display: none !important;
+}
 /****Used in all pages****/
 main {
   padding: 3% 2% 4% 2%;
@@ -329,4 +331,32 @@ i:hover {
     width: 100%;
   }
 
+}
+
+@media all {
+  .page-break {
+    display: none;
+  }
+}
+
+@media print {
+  html, body {
+    height: initial !important;
+    overflow: initial !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}
+
+@media print {
+  .page-break {
+    margin-top: 1rem;
+    display: block;
+    page-break-before: always;
+  }
+}
+
+@page {
+  size: auto;
+  margin: 0.5in !important;
 }
