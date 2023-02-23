@@ -135,7 +135,7 @@ function loadUserAttractions(parkDayFilter){
           <h2 className="text-white mb-4">My Trip</h2>
           <div className="bg-white rounded p-4">
             <h3>User Details:</h3>
-            <p>
+            <p className="overflow-auto">
               Email: {userData.email}
             </p>  
             <p>
@@ -170,7 +170,7 @@ function loadUserAttractions(parkDayFilter){
                     <Button>Update Itinerary</Button>
                     <i className="fa-solid fa-print mx-2" onClick={handlePrint}></i>
                 </div>}
-                <section className="d-flex flex-row" id="itinerary-container">
+                <section className="d-flex" id="itinerary-container">
                   <div className="itinerary-current">
                     <div className="d-flex align-items-center">
                       <h4 className="container-fluid">Currently Scheduled:</h4>
@@ -185,7 +185,7 @@ function loadUserAttractions(parkDayFilter){
                                   <i className="fa-solid fa-circle-question" onClick={() => displayDetails(attraction.name)} data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
                             </div>
                             <h6 className="w-100">{attraction.startTime} - {attraction.name}</h6>
-                            <Button type="button" className="btn btn-danger btn-sm" onClick={() => unscheduleAttraction(attraction.name)}>Unschedule</Button>
+                            <Button type="button" className="btn btn-danger btn-sm mx-1" onClick={() => unscheduleAttraction(attraction.name)}>Unschedule</Button>
                             <i className="fa-solid fa-trash" onClick={()=>deleteAttraction(attraction.name)}></i>
                           </div>
                         )

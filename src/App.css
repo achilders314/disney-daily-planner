@@ -31,6 +31,7 @@ main > div {
 
 /***********My Trip page*************/
 #itinerary-container{
+  flex-direction: row;
   justify-content: space-evenly;
   align-items: stretch;
 }
@@ -276,6 +277,7 @@ i:hover {
   .profile-update-form{
     width: 75%;
   }
+
 }
 
 @media screen and (max-width: 710px) {
@@ -317,7 +319,7 @@ i:hover {
 
   .itinerary-card {
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: center;
   }
   .itinerary-card h6{
     width: 100%;
