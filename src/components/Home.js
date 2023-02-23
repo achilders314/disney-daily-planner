@@ -15,11 +15,11 @@ export default function Home() {
                 <li>View their <Link to="profile">Profile</Link> page and edit their name, trip dates & parks.</li>
                 <li>Add attractions to each day of their trip</li>
                 <li>Create a customized schedule of those attractions</li>
+                <li>Save for trip day or create a printable PDF itinerary</li>
             </ul>
             <p>The plan for the near future is to allow users to:</p>
             <ul>
                 <li>Add restaurants, shows, and custom items to each day of your trip</li>
-                <li>Save for trip day or create a printable PDF itinerary</li>
             </ul>
             <p>Stay tuned! Keep checking back for updates.</p>
             <p>Want to donate to help me develop this site and take my kiddo to Disney? Click the button below to donate with Paypal!</p>

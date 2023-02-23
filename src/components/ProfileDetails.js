@@ -10,9 +10,13 @@ export default function ProfileDetails() {
 
   return (
     <div>
-        <p className="mt-3">(Coming Soon) You'll be able to pick which 
-                attractions you'd like to visit and create a customized schedule for your 
-                Walt Disney World trip! Keep visiting this page regularly as updates come out.
+        <p className="mt-3">
+          <ol>
+            <li>Select "Update Profile" to create your trip, manage which parks you're visiting, etc.</li>
+            <li>Then if you visit the "Attractions" page, you'll be able to select which attractions to add to your personal itinerary!</li>
+            <li>Last, visit the "My Trip" page to select a time for each attraction, and it will save or you can create a printable PDF!</li>
+          </ol>
+         
         </p>
         <p className="overflow-auto">
             Email: {userData.email}

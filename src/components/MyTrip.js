@@ -134,9 +134,6 @@ function loadUserAttractions(parkDayFilter){
         <>
           <h2 className="text-white mb-4">My Trip</h2>
           <div className="bg-white rounded p-4">
-            <p>(Coming Soon) Soon, you'll be able to create a customized schedule for your 
-              Walt Disney World trip! Keep visiting this page regularly as updates come out.
-            </p>
             <h3>User Details:</h3>
             <p>
               Email: {userData.email}
