@@ -3,33 +3,41 @@ import { Link } from 'react-router-dom'
 
 export default function Home() {
   return (
-    <main className="d-flex justify-content-center align-items-center flex-column"
-          style={{ minHeight: "80vh"}}>
-            <h1 className='text-white mb-4'>Welcome!</h1>
-        <div className="bg-white rounded p-4 w-75">
-            <p>This page is still under construction. Currently users are able to:</p>
-            <ul>
-                <li>View the Home, Contact, <Link to="/attractions">Attractions</Link>, and <Link to="/my-trip">My Trip</Link> pages.</li>
-                <li>Sign up or log in using either email or Google authentication through Firebase.</li>
-                <li>View their <Link to="my-trip">My Trip</Link> page.</li>
-                <li>View their <Link to="profile">Profile</Link> page and edit their name, trip dates & parks.</li>
-                <li>Add attractions to each day of their trip</li>
-                <li>Create a customized schedule of those attractions</li>
-                <li>Save for trip day or create a printable PDF itinerary</li>
-            </ul>
-            <p>The plan for the near future is to allow users to:</p>
-            <ul>
-                <li>Add restaurants, shows, and custom items to each day of your trip</li>
-            </ul>
-            <p>Stay tuned! Keep checking back for updates.</p>
-            <p>Want to donate to help me develop this site and take my kiddo to Disney? Click the button below to donate with Paypal!</p>
-            <form className="text-center" action="https://www.paypal.com/donate" method="post" target="_top">
-              <input type="hidden" name="hosted_button_id" value="354AEWWXF4Z8A" />
-              <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-              <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
-            </form>
-
+    <>
+        <section id="hero">
+          <div id="darken">
+            <h1 className='text-white'>Disney Daily Planner</h1>
+            <h2>View wait times, plan your ultimate Disney World trip.</h2>
+          </div>
+        </section>
+        <div id="how-to" className="bg-white">
+          <div className="steps-card d-flex flex-column align-items-center justify-content-center">
+            <i className="text-gray fa-solid fa-calendar-days"></i>
+            <h4>Setup Trip Dates</h4>
+          </div>
+          <div className="steps-card d-flex flex-column align-items-center justify-content-center">
+            <i className="fa-brands fa-fort-awesome"></i>            
+            <h4>Add Attractions to Each Day</h4>
+          </div>
+          <div className="d-flex flex-column align-items-center justify-content-center">
+            <i className="fa-solid fa-clipboard-list"></i>            
+            <h4>Create Your Custom Itinerary</h4>
+          </div>
         </div>
-    </main>
+        <section id="explanation">
+          <h3>Hello and welcome!</h3>
+          <p>With Disney Daily Planner, planning your next Walt Disney World vacation can be a snap! In just a few simple steps, you can start planning your vacation and maximizing your time.</p>
+          <ol>
+            <li>Create an <Link to="/sign-up">account</Link> or <Link to="/login">log in.</Link></li>
+            <li>Visit your <Link to="/profile">profile</Link> page to enter your trip dates & parks.</li>
+            <li>Visit the <Link to="/attractions">Attractions</Link> page to view typical wait times and add activities to each park day.</li>
+            <li>Visit the <Link to="/my-trip">My Trip</Link> page to see your attractions and create a detailed itinerary!</li>
+            <li>Save this info and use the app on your park days, or create a printable PDF!</li>
+          </ol>
+        </section>
+        <section id="call-to-action" className="w-100 d-flex justify-content-center align-items-center">
+            <h3 className="text-white">What are you waiting for? The magic starts <Link className="cta-link" to="/profile">here</Link>!</h3>
+        </section>
+    </>
   )
 }

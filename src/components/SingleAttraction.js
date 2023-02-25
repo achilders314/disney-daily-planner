@@ -59,75 +59,77 @@ function SingleAttraction(props){
                                     ""}
                             </div>
                         </div>
-                    <p>Status: {attraction.data.status}</p>
-                    <p className="wait-time">Current Wait Time: {attraction.data.currentWaitTime} minutes</p>
-                    <p className="time-note">Last Update: {timestamp}</p>
-                    <p className="wait-time">Average wait times each hour (in minutes):</p>
-                    <p className="time-note">Average over the last 14 days</p>
-                    <div className="hourly-chart d-flex container-fluid justify-content-evenly align-items-end">
-                        <div className="bar d-flex flex-column justify-content-end">
-                            <p className="bar-label">{waitTimes8 ? waitTimes8 : ""}</p>
-                            <div className="bar-height" style={{height: `${waitTimes8/2}px`}}></div>
-                            <p className="bar-minutes">8a</p>
-                        </div>
-                        <div className="bar d-flex flex-column justify-content-end">
-                            <p className="bar-label">{waitTimes9 ? waitTimes9 : ""}</p>
-                            <div className="bar-height" style={{height: `${waitTimes9/2}px`}}></div>
-                            <p className="bar-minutes">9a</p>
-                        </div>
-                        <div className="bar d-flex flex-column justify-content-end">
-                            <p className="bar-label">{waitTimes10 ? waitTimes10 : ""}</p>
-                            <div className="bar-height" style={{height: `${waitTimes10/2}px`}}></div>
-                            <p className="bar-minutes">10a</p>
-                        </div>
-                        <div className="bar d-flex flex-column justify-content-end">
-                            <p className="bar-label">{waitTimes11 ? waitTimes11 : ""}</p>
-                            <div className="bar-height" style={{height: `${waitTimes11/2}px`}}></div>
-                            <p className="bar-minutes">11a</p>
-                        </div>
-                        <div className="bar d-flex flex-column justify-content-end">
-                            <p className="bar-label">{waitTimes12 ? waitTimes12 : ""}</p>
-                            <div className="bar-height" style={{height: `${waitTimes12/2}px`}}></div>
-                            <p className="bar-minutes">12p</p>
-                        </div>
-                        <div className="bar d-flex flex-column justify-content-end">
-                            <p className="bar-label">{waitTimes13 ? waitTimes13 : ""}</p>
-                            <div className="bar-height" style={{height: `${waitTimes13/2}px`}}></div>
-                            <p className="bar-minutes">1p</p>
-                        </div>
-                        <div className="bar d-flex flex-column justify-content-end">
-                            <p className="bar-label">{waitTimes14 ? waitTimes14 : ""}</p>
-                            <div className="bar-height" style={{height: `${waitTimes14/2}px`}}></div>
-                            <p className="bar-minutes">2p</p>
-                        </div>
-                        <div className="bar d-flex flex-column justify-content-end">
-                            <p className="bar-label">{waitTimes15 ? waitTimes15 : ""}</p>
-                            <div className="bar-height" style={{height: `${waitTimes15/2}px`}}></div>
-                            <p className="bar-minutes">3p</p>
-                        </div>
-                        <div className="bar d-flex flex-column justify-content-end">
-                            <p className="bar-label">{waitTimes16 ? waitTimes16 : ""}</p>
-                            <div className="bar-height" style={{height: `${waitTimes16/2}px`}}></div>
-                            <p className="bar-minutes">4p</p>
-                        </div>
-                        <div className="bar d-flex flex-column justify-content-end">
-                            <p className="bar-label">{waitTimes17 ? waitTimes17 : ""}</p>
-                            <div className="bar-height" style={{height: `${waitTimes17/2}px`}}></div>
-                            <p className="bar-minutes">5p</p>
-                        </div>
-                        <div className="bar d-flex flex-column justify-content-end">
-                            <p className="bar-label">{waitTimes18 ? waitTimes18 : ""}</p>
-                            <div className="bar-height" style={{height: `${waitTimes18/2}px`}}></div>
-                            <p className="bar-minutes">6p</p>
-                        </div>
-                        <div className="bar d-flex flex-column justify-content-end">
-                            <p className="bar-label">{waitTimes19 ? waitTimes19 : ""}</p>
-                            <div className="bar-height" style={{height: `${waitTimes19/2}px`}}></div>
-                            <p className="bar-minutes">7p</p>
-                        </div>
+                    <div className="attractionCardBody">
+                        <p>Status: {attraction.data.status}</p>
+                        <p className="wait-time">Current Wait Time: {attraction.data.currentWaitTime} minutes</p>
+                        <p className="time-note">Last Update: {timestamp}</p>
+                        <p className="wait-time">Average wait times each hour (in minutes):</p>
+                        <p className="time-note">Average over the last 14 days</p>
+                        <div className="hourly-chart d-flex container-fluid justify-content-evenly align-items-end">
+                            <div className="bar d-flex flex-column justify-content-end">
+                                <p className="bar-label">{waitTimes8 ? waitTimes8 : ""}</p>
+                                <div className="bar-height" style={{height: `${waitTimes8/2}px`}}></div>
+                                <p className="bar-minutes">8a</p>
+                            </div>
+                            <div className="bar d-flex flex-column justify-content-end">
+                                <p className="bar-label">{waitTimes9 ? waitTimes9 : ""}</p>
+                                <div className="bar-height" style={{height: `${waitTimes9/2}px`}}></div>
+                                <p className="bar-minutes">9a</p>
+                            </div>
+                            <div className="bar d-flex flex-column justify-content-end">
+                                <p className="bar-label">{waitTimes10 ? waitTimes10 : ""}</p>
+                                <div className="bar-height" style={{height: `${waitTimes10/2}px`}}></div>
+                                <p className="bar-minutes">10a</p>
+                            </div>
+                            <div className="bar d-flex flex-column justify-content-end">
+                                <p className="bar-label">{waitTimes11 ? waitTimes11 : ""}</p>
+                                <div className="bar-height" style={{height: `${waitTimes11/2}px`}}></div>
+                                <p className="bar-minutes">11a</p>
+                            </div>
+                            <div className="bar d-flex flex-column justify-content-end">
+                                <p className="bar-label">{waitTimes12 ? waitTimes12 : ""}</p>
+                                <div className="bar-height" style={{height: `${waitTimes12/2}px`}}></div>
+                                <p className="bar-minutes">12p</p>
+                            </div>
+                            <div className="bar d-flex flex-column justify-content-end">
+                                <p className="bar-label">{waitTimes13 ? waitTimes13 : ""}</p>
+                                <div className="bar-height" style={{height: `${waitTimes13/2}px`}}></div>
+                                <p className="bar-minutes">1p</p>
+                            </div>
+                            <div className="bar d-flex flex-column justify-content-end">
+                                <p className="bar-label">{waitTimes14 ? waitTimes14 : ""}</p>
+                                <div className="bar-height" style={{height: `${waitTimes14/2}px`}}></div>
+                                <p className="bar-minutes">2p</p>
+                            </div>
+                            <div className="bar d-flex flex-column justify-content-end">
+                                <p className="bar-label">{waitTimes15 ? waitTimes15 : ""}</p>
+                                <div className="bar-height" style={{height: `${waitTimes15/2}px`}}></div>
+                                <p className="bar-minutes">3p</p>
+                            </div>
+                            <div className="bar d-flex flex-column justify-content-end">
+                                <p className="bar-label">{waitTimes16 ? waitTimes16 : ""}</p>
+                                <div className="bar-height" style={{height: `${waitTimes16/2}px`}}></div>
+                                <p className="bar-minutes">4p</p>
+                            </div>
+                            <div className="bar d-flex flex-column justify-content-end">
+                                <p className="bar-label">{waitTimes17 ? waitTimes17 : ""}</p>
+                                <div className="bar-height" style={{height: `${waitTimes17/2}px`}}></div>
+                                <p className="bar-minutes">5p</p>
+                            </div>
+                            <div className="bar d-flex flex-column justify-content-end">
+                                <p className="bar-label">{waitTimes18 ? waitTimes18 : ""}</p>
+                                <div className="bar-height" style={{height: `${waitTimes18/2}px`}}></div>
+                                <p className="bar-minutes">6p</p>
+                            </div>
+                            <div className="bar d-flex flex-column justify-content-end">
+                                <p className="bar-label">{waitTimes19 ? waitTimes19 : ""}</p>
+                                <div className="bar-height" style={{height: `${waitTimes19/2}px`}}></div>
+                                <p className="bar-minutes">7p</p>
+                            </div>
                     
+                        </div>
                     </div>
-                    </div>
+                </div>
     )
 }
 

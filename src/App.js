@@ -13,6 +13,7 @@ import Profile from './components/Profile'
 import Attractions from './components/Attractions'
 import Footer from './components/Footer'
 import NotFound from './components/NotFound'
+import Contact from './components/Contact';
 import { AuthProvider } from './contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { AttractionProvider } from './contexts/AttractionContext';
@@ -28,7 +29,7 @@ function App() {
       <Nav />
       <Routes>
           <Route exact path="/" element={<Home />}></Route>
-          <Route exact path="/contact" element={<main><h1 className="text-white">Contact Us</h1></main>}></Route>
+          <Route exact path="/contact" element={<Contact />}></Route>
           <Route exact path="/sign-up" element={<Signup />}></Route>
           <Route exact path="/login" element={<Login />}></Route>
           <Route exact path="/please-login" element={<PleaseLogin />}></Route>
