@@ -373,6 +373,10 @@ i:hover {
     padding-bottom: 3rem;
   }
 
+  #hero{
+    background-attachment: scroll;
+  }
+
   #hero h1{
     font-size: 3rem;
   }
