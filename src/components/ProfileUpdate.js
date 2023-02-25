@@ -120,7 +120,7 @@ export default function ProfileUpdate() {
             <input id="trip-start-value" 
                    className="form-control date"  
                    type="date" ref={tripStartRef} 
-                   defaultValue={Object.keys(userData).length ?
+                   defaultValue={userData.trip[0].tripStart !== "" ?
                           new Date(userData.trip[0].tripStart).toISOString().split('T')[0] : today}
                           required />
         </Form.Group>
@@ -129,7 +129,7 @@ export default function ProfileUpdate() {
             <input id="trip-end-value" 
                    className="form-control date" 
                    type="date" ref={tripEndRef} 
-                   defaultValue={Object.keys(userData).length ?
+                   defaultValue={userData.trip[0].tripEnd !== "" ?
                           new Date(userData.trip[0].tripEnd).toISOString().split('T')[0] : tomorrow}
                           required />
         </Form.Group>

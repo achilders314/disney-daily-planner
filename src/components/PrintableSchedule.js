@@ -13,7 +13,7 @@ export const PrintableSchedule = React.forwardRef((props,ref) => {
     <>
         <style>{getPageMargins()}</style>
         <div ref={ref} className="print-container">
-            {loading ? 
+            {loading || trip[0].parkDays === undefined ? 
             "" :
             trip[0].parkDays.map((day) => {
                 return(

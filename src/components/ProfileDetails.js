@@ -10,14 +10,12 @@ export default function ProfileDetails() {
 
   return (
     <div>
-        <p className="mt-3">
-          <ol>
+          <ol className="mt-3">
             <li>Select "Update Profile" to create your trip, manage which parks you're visiting, etc.</li>
             <li>Then if you visit the "Attractions" page, you'll be able to select which attractions to add to your personal itinerary!</li>
             <li>Last, visit the "My Trip" page to select a time for each attraction, and it will save or you can create a printable PDF!</li>
           </ol>
          
-        </p>
         <p className="overflow-auto">
             Email: {userData.email}
         </p>  
