@@ -1,4 +1,4 @@
-import React, { useEffect }  from 'react';
+import React  from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useAttractions } from '../contexts/AttractionContext';
 import AttractionsLoggedIn from './AttractionsLoggedIn'

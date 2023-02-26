@@ -68,6 +68,11 @@ main {
   margin-bottom: 2rem;
 }
 
+.steps-card{
+  border-right: 1px solid #e8e8e8;
+
+}
+
 #explanation{
   background-color: #e8e8e8;
   margin: 0;

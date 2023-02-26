@@ -41,7 +41,7 @@ export default function Signup(){
         try{
             setError('')
             await googleLogin()
-
+            navigate("/")
         } catch {
             setError('Failed to sign in. Please try again.')
         }

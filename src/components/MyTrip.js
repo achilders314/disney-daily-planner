@@ -13,8 +13,6 @@ export default function MyTrip() {
   const { attractionsLoading } = useAttractions();
   const [scheduled, setScheduled] = useState([]);
   const [unscheduled, setUnscheduled] = useState([]);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
   const [attractionPopup, setAttractionPopup] = useState("Peter Pan's Flight");
   const dateSelector = useRef();
   const printableRef = useRef();
@@ -23,8 +21,6 @@ export default function MyTrip() {
   });
 
   function changeTripDay(){
-      setError('')
-      setSuccess('')
       if(dateSelector.current.value){
           let parkDayFilter = userData.trip[0].parkDays.filter((day) => day.tripDate === dateSelector.current.value);
           const scheduledAttractions = parkDayFilter[0].attractions ? 
@@ -101,7 +97,6 @@ function loadUserAttractions(parkDayFilter){
     let tripDayIndex = userData.trip[0].parkDays.findIndex((day) => day.tripDate === parkDayFilter[0].tripDate);
     const attractionsCopy = currentAttractions.map((attraction) => attraction.name);
     const attractionIndex = attractionsCopy.indexOf(attractionName);
-    const selectedTime = document.getElementById(`${attractionName}-time`);
     currentAttractions[attractionIndex].startTime = "";
     let update = {}
     update[`users/${currentUser.uid}/trip/0/parkDays/${tripDayIndex}/attractions`] = currentAttractions;
@@ -167,8 +162,7 @@ function loadUserAttractions(parkDayFilter){
                             </Form.Select>
                         </Form.Group>
                     </Form>
-                    <Button>Update Itinerary</Button>
-                    <i className="fa-solid fa-print mx-2" onClick={handlePrint}></i>
+                    <i className="pb-1 fa-solid fa-print mx-2" onClick={handlePrint}></i>
                 </div>}
                 <section className="d-flex" id="itinerary-container">
                   <div className="itinerary-current">
@@ -201,7 +195,7 @@ function loadUserAttractions(parkDayFilter){
                       <div className="d-flex itinerary-cards-flex">  
                         {unscheduled.map((attraction) => {
                           return(
-                            <div key={attraction.name} className="itinerary-card d-flex p-2">
+                            <div key={`${attraction.name}-unscheduled`} className="itinerary-card d-flex p-2">
                               <div className="d-flex justify-content-end w-100">
                                 <i className="fa-solid fa-circle-question" onClick={() => displayDetails(attraction.name)} data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
                               </div>

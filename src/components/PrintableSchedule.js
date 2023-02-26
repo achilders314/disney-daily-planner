@@ -1,9 +1,8 @@
 import React, { forwardRef } from 'react'
-import { Button } from 'react-bootstrap' 
 import { useAuth } from '../contexts/AuthContext';
 
 
-export const PrintableSchedule = React.forwardRef((props,ref) => {
+export const PrintableSchedule = forwardRef((props,ref) => {
     const { userData, loading } = useAuth();
     const { trip } = userData;
     const getPageMargins = () => {
