@@ -1,13 +1,15 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function Home() {
+  const navigate = useNavigate();
   return (
     <>
         <section id="hero">
           <div id="darken">
             <h1 className='text-white'>Disney Daily Planner</h1>
             <h2>View wait times, plan your ultimate Disney World trip.</h2>
+            <div id="cta-button" onClick={() => navigate("/profile")}>Get Started</div>
           </div>
         </section>
         <div id="how-to" className="bg-white">
