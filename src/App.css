@@ -190,15 +190,22 @@ i:hover {
   padding: 1% 2%;
 }
 
-.attractions{
+.attractions-wrap{
   padding: 10px 0;
   color: #000;
+  overflow: hidden;
+  border-collapse: separate;
+  perspective: 1px;
+}
+
+.attractions{
+  width: 100%;
+  padding: 10px 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-evenly;
   background-color: #f2f4f7;
-  border-radius: 20px;
 }
 
 .attractions h2 {
@@ -280,7 +287,8 @@ i:hover {
 
 /**************Dropdowns on Attractions & My Trip**************/
 
-#attractions-day-filter, #my-trip-date{
+#attractions-day-filter Form, #attractions-park-filter Form, #my-trip-date{
+  display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: flex-end;
@@ -289,7 +297,6 @@ i:hover {
 
 #attractions-day-filter Button, #my-trip-date Button{
   margin-top: 0;
-  margin-left: 1rem;
 }
 
 
@@ -420,14 +427,16 @@ i:hover {
     width: 85%;
   }
 
-  #attractions-day-filter, #my-trip-date{
+  #attractions-day-filter Form, #attractions-park-filter Form, #my-trip-date{
+    display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
+    justify-content: stretch;
+    align-items: stretch;
     margin: 1rem 1rem 1rem 1rem;
   }
 
-  #attractions-day-filter Button, #my-trip-date Button{
+
+  #attractions-day-filter Button, #my-trip-date Button, #attractions-park-filter Button{
     margin-top: 1rem;
     margin-left: 0;
   }
@@ -444,7 +453,9 @@ i:hover {
 
   .itinerary-card {
     flex-wrap: wrap;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
   }
   .itinerary-card h6{
     width: 100%;

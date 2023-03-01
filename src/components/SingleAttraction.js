@@ -3,10 +3,11 @@ import { useAuth } from '../contexts/AuthContext';
 import { useAttractions } from '../contexts/AttractionContext';
 
 function SingleAttraction(props){
-    const { attractions, attractionsLoading } = useAttractions();
+    const { attractions, restaurants, shows, attractionsLoading } = useAttractions();
     const attractionName = props.attractionName;
     const isChecked = props.isChecked;
-    const attraction = attractions.filter((attraction) => attraction.name === attractionName)[0];
+    const allAttractions = attractions.concat(restaurants, shows);
+    const attraction = allAttractions.filter((attraction) => attraction.name === attractionName)[0];
     const {loading} = useAuth();
     let timestamp = new Date(attraction.data.lastUpdated);
     // let day = timestamp.getDay();

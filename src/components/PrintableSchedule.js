@@ -37,12 +37,14 @@ export const PrintableSchedule = forwardRef((props,ref) => {
                                                 return 0
                                             })
                                             .map((attraction) => {
+                                                let startHours = parseInt(attraction.startTime.slice(0, 2));
+                                                let startMin = attraction.startTime.slice(3);
                                 return(
                                     <tr key={attraction.name}>
                                         <th scope="row"><input type="checkbox" /></th>
-                                        <td>{attraction.startTime}</td>
+                                        <td>{`${startHours === 12 ? 12 : startHours % 12}:${startMin}${startHours<12 ? "a" : "p"}`}</td>
                                         <td>{attraction.name}</td>
-                                        <td>Attraction</td>
+                                        <td>{attraction.type ? attraction.type : "Attraction"}</td>
                                     </tr>
                                 )
                             })
@@ -55,7 +57,7 @@ export const PrintableSchedule = forwardRef((props,ref) => {
                                         <th scope="row"><input type="checkbox" /></th>
                                         <td>{attraction.startTime}</td>
                                         <td>{attraction.name}</td>
-                                        <td>Attraction</td>
+                                        <td>{attraction.type ? attraction.type : "Attraction"}</td>
                                     </tr>
                                 )
                             })

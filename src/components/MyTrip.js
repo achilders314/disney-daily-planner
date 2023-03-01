@@ -173,12 +173,16 @@ function loadUserAttractions(parkDayFilter){
                       <p><em>No events scheduled yet. Visit the "Attractions" page to add some & then come back here to set up your schedule!</em></p> :
                       <>
                         {scheduled.map((attraction) => {
+                          let startHours = parseInt(attraction.startTime.slice(0, 2));
+                          let startMin = attraction.startTime.slice(3);
                         return (
                           <div key={attraction.name} className="itinerary-card d-flex">
                             <div className="d-flex justify-content-end w-100">
                                   <i className="fa-solid fa-circle-question" onClick={() => displayDetails(attraction.name)} data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
                             </div>
-                            <h6 className="w-100">{attraction.startTime} - {attraction.name}</h6>
+                            <h6 className="w-100">{`${startHours === 12 ? 12 : startHours % 12}:${startMin}${startHours<12 ? "a" : "p"}`} 
+                                                    - {attraction.name}<span className="text-black-50">{attraction.type ? ` - ${attraction.type}` : ""}</span>
+                            </h6>
                             <Button type="button" className="btn btn-danger btn-sm mx-1" onClick={() => unscheduleAttraction(attraction.name)}>Unschedule</Button>
                             <i className="fa-solid fa-trash" onClick={()=>deleteAttraction(attraction.name)}></i>
                           </div>
@@ -199,7 +203,7 @@ function loadUserAttractions(parkDayFilter){
                               <div className="d-flex justify-content-end w-100">
                                 <i className="fa-solid fa-circle-question" onClick={() => displayDetails(attraction.name)} data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
                               </div>
-                              <h6 className="w-100">{attraction.name}</h6>
+                              <h6 className="w-100">{attraction.name}<span className="text-black-50">{attraction.type ? ` (${attraction.type})`: ""}</span></h6>
                               <input type="time" className="form-control time" id={`${attraction.name}-time`} defaultValue={new Date().getTime()} />
                               <Button type="button" className="btn btn-primary" onClick={() => scheduleAttraction(attraction.name)}>Schedule</Button>
                               <i className="fa-solid fa-trash mx-1" onClick={()=>deleteAttraction(attraction.name)}></i>

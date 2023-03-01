@@ -15,6 +15,8 @@ export function AttractionProvider({ children }) {
     const attractionCollectionRef = child(ref(getDatabase(app)), '/attractions/')
     const [parks, setParks] = useState([])
     const [attractions, setAttractions] = useState([]);
+    const [restaurants, setRestaurants] = useState([]);
+    const [shows, setShows] = useState([]);
     const [attractionsLoading, setAttractionsLoading] = useState(true);
 
     //On app load, gets the parks from the Firebase database. 
@@ -27,8 +29,8 @@ export function AttractionProvider({ children }) {
             let parkIds;
             let attractionData;
             let attractionKeys;
-            // let showKeys;
-            // let restaurantKeys;
+            let showKeys;
+            let restaurantKeys;
             await get(parksCollectionRef).then((snap) => {
             if(snap.exists()){
                 parkData = snap.val();
@@ -51,18 +53,17 @@ export function AttractionProvider({ children }) {
             if(snap.exists()){
                 attractionData = snap.val();
                 attractionKeys = Object.keys(attractionData.ATTRACTION)
-                // restaurantKeys = Object.keys(attractionData.RESTAURANT)
-                // showKeys = Object.keys(attractionData.SHOW)
-                setAttractions(attractionKeys.map((ride) => {return {name: ride, data: attractionData.ATTRACTION[ride]}}));
-                // setRestaurants(restaurantKeys.map((restaurant) => {return {name: restaurant, data: attractionData.RESTAURANT[restaurant]}}));
-                // setShows(showKeys.map((show) => {return {name: show, data: attractionData.SHOW[show]}}));
+                restaurantKeys = Object.keys(attractionData.RESTAURANT)
+                showKeys = Object.keys(attractionData.SHOW)
+                setAttractions(attractionKeys.map((ride) => {return {name: ride, type: "Attraction", data: attractionData.ATTRACTION[ride]}}));
+                setRestaurants(restaurantKeys.map((restaurant) => {return {name: restaurant, type: "Restaurant", data: attractionData.RESTAURANT[restaurant]}}));
+                setShows(showKeys.map((show) => {return {name: show, type: "Show", data: attractionData.SHOW[show]}}));
             }
             else{
                 console.log("No data")
             }
         }).catch((err) => {console.log(err)});
         return;
-        // setAttractions(attractionData.docs.map((doc) =>({...doc.data()})))
       }
         getParks();
         setAttractionsLoading(false);
@@ -71,6 +72,8 @@ export function AttractionProvider({ children }) {
     const attractionInfo = {
         parks,
         attractions,
+        restaurants, 
+        shows,
         attractionsLoading
     }
     return (
