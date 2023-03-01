@@ -66,7 +66,7 @@ export default function AttractionsLoggedIn(props){
         try{
         let selectedAttractionsCopy = selectedAttractions;
         selectedAttractionsCopy = selectedAttractionsCopy.map((attraction) => {
-            return {name: attraction.name, type: attraction.type, startTime: "", endTime: ""}
+            return {name: attraction.name, type: attraction.type, startTime: ""}
         });
         if(selectedAttractionsCopy.length === 0){
             return setError("Please select at least one attraction to add.")
@@ -122,7 +122,7 @@ export default function AttractionsLoggedIn(props){
         const modifiedAttractions = allAttractions.filter((attraction) => {
                                                     return !currentAttractions.includes(attraction.name);
                                                 })
-                                                .map((attraction) => {return {name: attraction.name, type: attraction.type, isChecked: false, startTime: "", endTime: "", parkId: attraction.data.parkId}})
+                                                .map((attraction) => {return {name: attraction.name, type: attraction.type, isChecked: false, startTime: "", parkId: attraction.data.parkId}})
                                                 
         return setModAttractions(modifiedAttractions);
     }

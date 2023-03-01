@@ -118,7 +118,7 @@ function loadUserAttractions(parkDayFilter){
     
   }, [userData, dateSelector, attractionsLoading])
 
-  // If startTime and EndTime
+
   return (
     <main className="d-flex justify-content-center align-items-center flex-column"
           style={{ minHeight: "80vh"}}>
@@ -181,7 +181,7 @@ function loadUserAttractions(parkDayFilter){
                                   <i className="fa-solid fa-circle-question" onClick={() => displayDetails(attraction.name)} data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
                             </div>
                             <h6 className="w-100">{`${startHours === 12 ? 12 : startHours % 12}:${startMin}${startHours<12 ? "a" : "p"}`} 
-                                                    - {attraction.name}<span className="text-black-50">{attraction.type ? ` - ${attraction.type}` : ""}</span>
+                                                    - {attraction.name}<span className="text-black-50">{attraction.type ? ` (${attraction.type})` : ""}</span>
                             </h6>
                             <Button type="button" className="btn btn-danger btn-sm mx-1" onClick={() => unscheduleAttraction(attraction.name)}>Unschedule</Button>
                             <i className="fa-solid fa-trash" onClick={()=>deleteAttraction(attraction.name)}></i>
