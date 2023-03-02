@@ -89,6 +89,8 @@ export function AuthProvider({ children, onSuccess }) {
 
     function logout() {
         signOut(auth);
+        setCurrentUser();
+        setUserData('');
     }
 
     function resetPassword(email) {
@@ -120,7 +122,11 @@ export function AuthProvider({ children, onSuccess }) {
                 setUserData({ ...newUser })
                 userInfo = newUser;
             }
-        }).catch((err) => console.log(err.message))
+        }).catch((err) => {
+            console.log(err.message)
+            setCurrentUser();
+            setUserData('');
+        })
         return userInfo;
     }
 

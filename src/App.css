@@ -3,6 +3,10 @@
   padding: 0;
 }
 
+ScrollToTop{
+  scroll-behavior: auto;
+}
+
 .d-none {
   display: none !important;
 }
