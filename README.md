@@ -3,7 +3,6 @@ An app created with React/Firebase that allows users to plan their trip at Walt 
 
 [Live Site (Visit "Attractions" page, or create an account, update your profile, & begin choosing attractions!)](https://disney-daily-planner-dbad2.web.app/)
 ![Gif of Disney Daily Planner](Disney-Planner.gif)
-![Image of Disney Daily Planner](https://user-images.githubusercontent.com/102301042/209495887-9bcc1414-42c5-4697-9976-bf65be6f0a8d.png)
 
 ### Description
 In this React/Firebase project, I have a Google cloud function set up to gather data each hour from the Themeparks API. This displays in the app and users can (as of 3/1/23) create an account using either email/password or Google authentication through Firebase, update their profile with Name, Trip Dates, Parks, and then when they visit the "Attractions" page they can select which attractions, restaurants, and shows to add for each day. These will then display on the "My Trip" page. They can then rearrange a custom itinerary for each day, and save or print/create a PDF!
