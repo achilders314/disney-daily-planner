@@ -2,6 +2,7 @@
 An app created with React/Firebase that allows users to plan their trip at Walt Disney World using wait time data from the [Themepark API](https://api.themeparks.wiki/docs/v1/)
 
 [Live Site (Visit "Attractions" page, or create an account, update your profile, & begin choosing attractions!)](https://disney-daily-planner-dbad2.web.app/)
+![Gif of Disney Daily Planner](Disney-Planner.gif)
 ![Image of Disney Daily Planner](https://user-images.githubusercontent.com/102301042/209495887-9bcc1414-42c5-4697-9976-bf65be6f0a8d.png)
 
 ### Description
